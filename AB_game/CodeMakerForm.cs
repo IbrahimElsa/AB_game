@@ -140,7 +140,7 @@ namespace AB_game
             guessTextBox_4.Enabled = false;
 
             winLabel.Visible = true;
-            winLabel.Text = $"Congradulations!  Score: 10 x (10 - {GuessNumber} + 1) - ({elapsedSeconds} / 10) = {Score}";
+            winLabel.Text = $"Congratulations!  Score: 10 x (10 - {GuessNumber} + 1) - ({elapsedSeconds} / 10) = {Score}";
         }
         private void SubmitGuessButton_Click(object sender, EventArgs e)
         {
