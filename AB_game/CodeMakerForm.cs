@@ -28,41 +28,7 @@ namespace AB_game
             int nHeightEllipse
         );
 
-        public class CustomMenuStripRenderer : ToolStripProfessionalRenderer
-        {
-            public CustomMenuStripRenderer()
-            {
-            }
 
-            protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
-            {
-                base.OnRenderToolStripBackground(e);
-                if (e.ToolStrip is MenuStrip)
-                {
-                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(72, 77, 99)), e.AffectedBounds);
-                }
-            }
-
-            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
-            {
-                if (e.Item.Selected)
-                {
-                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(92, 97, 119)), e.Item.ContentRectangle); // Highlight color
-                }
-                else
-                {
-                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(72, 77, 99)), e.Item.ContentRectangle); // Normal color
-                }
-            }
-
-            protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
-            {
-                e.TextColor = Color.White;
-                e.Item.ForeColor = Color.White;
-                e.Item.Font = new Font("Segoe UI", 12, FontStyle.Bold); 
-                base.OnRenderItemText(e);
-            }
-        }
         public CodeMakerForm(string groupValue)
         {
             InitializeComponent();
@@ -76,9 +42,15 @@ namespace AB_game
             elapsedSeconds = 0;
 
             codeMakerGame.GenerateSecretNumber();
-            menuStrip1.Renderer = new CustomMenuStripRenderer();
+
+            menuStrip1.BackColor = Color.FromArgb(72, 77, 99);
+            menuStrip1.ForeColor = Color.White;
+            menuStrip1.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+
             foreach (ToolStripMenuItem item in menuStrip1.Items)
             {
+                item.BackColor = Color.FromArgb(72, 77, 99);
+                item.ForeColor = Color.White;
                 item.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             }
 
@@ -150,16 +122,6 @@ namespace AB_game
             }
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            WelcomeForm welcomeForm = new WelcomeForm();
-            welcomeForm.Show();
-        }
-        private void ExitButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
         private void Win_Conditions(int GuessNumber)
         {
             int Score = 10 * (10 - GuessNumber + 1) - (elapsedSeconds / 10);
@@ -325,7 +287,6 @@ namespace AB_game
                 guessTextBox_2.Focus();
             }
         }
-
         private void guessTextBox_2_TextChanged(object sender, EventArgs e)
         {
             if (guessTextBox_2.Text.Length == 1 && char.IsDigit(guessTextBox_2.Text[0]))
@@ -333,7 +294,6 @@ namespace AB_game
                 guessTextBox_3.Focus();
             }
         }
-
         private void guessTextBox_3_TextChanged(object sender, EventArgs e)
         {
             if (guessTextBox_3.Text.Length == 1 && char.IsDigit(guessTextBox_3.Text[0]))
@@ -341,7 +301,6 @@ namespace AB_game
                 guessTextBox_4.Focus();
             }
         }
-
         private void guessTextBox_4_TextChanged(object sender, EventArgs e)
         {
             if (guessTextBox_4.Text.Length == 1 && char.IsDigit(guessTextBox_4.Text[0]))
@@ -349,14 +308,13 @@ namespace AB_game
                 SubmitGuessButton.Focus();
             }
         }
-
         private void GuessTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            TextBox currentTextBox = sender as TextBox;
+            TextBox? currentTextBox = sender as TextBox;
             if (e.KeyCode == Keys.Back && currentTextBox != null && currentTextBox.Text.Length == 0)
             {
                 // Decide which TextBox to focus based on the sender
-                TextBox previousTextBox = null;
+                TextBox? previousTextBox = null;
                 if (currentTextBox == guessTextBox_2) previousTextBox = guessTextBox_1;
                 else if (currentTextBox == guessTextBox_3) previousTextBox = guessTextBox_2;
                 else if (currentTextBox == guessTextBox_4) previousTextBox = guessTextBox_3;
@@ -379,27 +337,38 @@ namespace AB_game
 
         private void revealToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            RevealButton_Click(sender, e);
         }
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            TimerButton_Click(sender, e);
         }
 
         private void submitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            SubmitGuessButton_Click(sender, e);
         }
 
         private void newgameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            NewGameButton_Click(sender, e);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ExitButton_Click(sender, e);
+        }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            WelcomeForm welcomeForm = new WelcomeForm();
+            welcomeForm.Show();
+        }
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
