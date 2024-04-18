@@ -78,7 +78,6 @@
             // 
             CodeMakerButton.BackColor = Color.FromArgb(46, 51, 73);
             CodeMakerButton.CausesValidation = false;
-            CodeMakerButton.Enabled = false;
             CodeMakerButton.FlatStyle = FlatStyle.Flat;
             CodeMakerButton.Font = new Font("Segoe UI", 18F);
             CodeMakerButton.ForeColor = Color.White;
@@ -93,7 +92,6 @@
             // CodeBreakerButton
             // 
             CodeBreakerButton.BackColor = Color.FromArgb(46, 51, 73);
-            CodeBreakerButton.Enabled = false;
             CodeBreakerButton.FlatStyle = FlatStyle.Flat;
             CodeBreakerButton.Font = new Font("Segoe UI", 18F);
             CodeBreakerButton.ForeColor = Color.White;
@@ -117,7 +115,6 @@
             GroupTextBox.Size = new Size(189, 39);
             GroupTextBox.TabIndex = 5;
             GroupTextBox.TextAlign = HorizontalAlignment.Center;
-            GroupTextBox.TextChanged += GroupTextBox_TextChanged;
             // 
             // button1
             // 

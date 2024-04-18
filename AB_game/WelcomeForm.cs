@@ -36,12 +36,6 @@ namespace AB_game
             // CodeBreakerButton.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, CodeBreakerButton.Width, CodeBreakerButton.Height, 15, 15));
         }
 
-        private void GroupTextBox_TextChanged(object sender, EventArgs e)
-        {
-            CodeMakerButton.Enabled = !string.IsNullOrWhiteSpace(GroupTextBox.Text);
-            CodeBreakerButton.Enabled = !string.IsNullOrWhiteSpace(GroupTextBox.Text);
-        }
-
         private void ExitPanel_MouseDown(object? sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
