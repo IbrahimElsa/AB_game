@@ -3,6 +3,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using static AB_game.CodeBreakerForm;
 
 namespace AB_game
 {
@@ -49,10 +50,11 @@ namespace AB_game
 
             foreach (ToolStripMenuItem item in menuStrip1.Items)
             {
-                item.BackColor = Color.FromArgb(72, 77, 99);
-                item.ForeColor = Color.White;
                 item.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             }
+
+            CustomMenuRenderer renderer = new CustomMenuRenderer();
+            menuStrip1.Renderer = renderer;
 
             // Attach mouse event handlers to ExitPanel, NamePanel, and GroupLabel
             ExitPanel.MouseDown += PanelMouseDown;
@@ -66,6 +68,26 @@ namespace AB_game
             GroupLabel.MouseUp += PanelMouseUp;
         }
 
+        public class CustomMenuRenderer : ToolStripProfessionalRenderer
+        {
+            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+            {
+                if (e.Item.Selected)
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(86, 92, 118)), e.Item.ContentRectangle);
+                }
+                else
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(72, 77, 99)), e.Item.ContentRectangle);
+                }
+            }
+
+            protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+            {
+                e.TextColor = Color.White;
+                base.OnRenderItemText(e);
+            }
+        }
 
         // Rename the mouse event handlers to be more generic
         private void PanelMouseDown(object? sender, MouseEventArgs e)
@@ -144,15 +166,15 @@ namespace AB_game
         }
         private void SubmitGuessButton_Click(object sender, EventArgs e)
         {
-            if (!CodeMakerTimer.Enabled)
-            {
-                CodeMakerTimer.Start();
-                TimerButton.Visible = true;
-            }
-
             // Check if all guess text boxes are filled with valid numbers
             if (IsValidGuess())
             {
+                if (!CodeMakerTimer.Enabled)
+                {
+                    CodeMakerTimer.Start();
+                    TimerButton.Visible = true;
+                }
+
                 string guess = guessTextBox_1.Text + guessTextBox_2.Text + guessTextBox_3.Text + guessTextBox_4.Text;
                 string result = codeMakerGame.EvaluateGuess(guess);
 
@@ -248,6 +270,11 @@ namespace AB_game
 
         private void TimerButton_Click(object sender, EventArgs e)
         {
+            if (!TimerButton.Visible)
+            {
+                return;
+            }
+
             if (timerPaused)
             {
                 // Resume the timer

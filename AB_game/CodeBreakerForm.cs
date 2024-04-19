@@ -28,10 +28,9 @@ namespace AB_game
         public CodeBreakerForm(string groupValue)
         {
             InitializeComponent();
+
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
-
             codeBreakerGame = new CodeBreakerGame();
-
             this.groupValue = groupValue;
             GroupLabel.Text += " vs. Group " + groupValue;
 
@@ -41,10 +40,11 @@ namespace AB_game
 
             foreach (ToolStripMenuItem item in menuStrip1.Items)
             {
-                item.BackColor = Color.FromArgb(72, 77, 99);
-                item.ForeColor = Color.White;
                 item.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             }
+
+            CustomMenuRenderer renderer = new CustomMenuRenderer();
+            menuStrip1.Renderer = renderer;
 
             // Attach mouse event handlers to ExitPanel, NamePanel, and GroupLabel
             ExitPanel.MouseDown += PanelMouseDown;
@@ -57,7 +57,6 @@ namespace AB_game
             GroupLabel.MouseMove += PanelMouseMove;
             GroupLabel.MouseUp += PanelMouseUp;
 
-
             // Generate the initial guess
             string initialGuess = codeBreakerGame.GenerateInitialGuess();
             PopulateGuessLabels(initialGuess);
@@ -69,6 +68,27 @@ namespace AB_game
             GuessLabel_2.Text = guess[1].ToString();
             GuessLabel_3.Text = guess[2].ToString();
             GuessLabel_4.Text = guess[3].ToString();
+        }
+
+        public class CustomMenuRenderer : ToolStripProfessionalRenderer
+        {
+            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+            {
+                if (e.Item.Selected)
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(86, 92, 118)), e.Item.ContentRectangle);
+                }
+                else
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(72, 77, 99)), e.Item.ContentRectangle);
+                }
+            }
+
+            protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+            {
+                e.TextColor = Color.White;
+                base.OnRenderItemText(e);
+            }
         }
 
         // Rename the mouse event handlers to be more generic
@@ -227,6 +247,21 @@ namespace AB_game
                     hintTextBox_1.Text = "";
                 }
             }
+        }
+
+        private void submitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SubmitHintButton_Click(sender, e);
+        }
+
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newGameBtn_Click(sender, e);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExitButton_Click(sender, e);
         }
     }
 }

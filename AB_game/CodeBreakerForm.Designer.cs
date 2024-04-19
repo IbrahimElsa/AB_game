@@ -50,17 +50,12 @@
             ExitPanel = new Panel();
             NamePanel = new Panel();
             GroupLabel = new Label();
-            ExitButton = new Button();
             menuStrip1 = new MenuStrip();
             menuToolStripMenuItem = new ToolStripMenuItem();
-            pauseToolStripMenuItem = new ToolStripMenuItem();
-            submitToolStripMenuItem = new ToolStripMenuItem();
-            revealToolStripMenuItem = new ToolStripMenuItem();
-            newgameToolStripMenuItem = new ToolStripMenuItem();
+            submitHintToolStripMenuItem = new ToolStripMenuItem();
+            newGameToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
-            toolStripMenuItem1 = new ToolStripMenuItem();
-            toolStripMenuItem2 = new ToolStripMenuItem();
-            toolStripMenuItem3 = new ToolStripMenuItem();
+            ExitButton = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ExitPanel.SuspendLayout();
@@ -294,8 +289,8 @@
             // 
             ExitPanel.BackColor = Color.FromArgb(72, 77, 99);
             ExitPanel.Controls.Add(NamePanel);
-            ExitPanel.Controls.Add(ExitButton);
             ExitPanel.Controls.Add(menuStrip1);
+            ExitPanel.Controls.Add(ExitButton);
             ExitPanel.Dock = DockStyle.Top;
             ExitPanel.ForeColor = Color.Transparent;
             ExitPanel.Location = new Point(0, 0);
@@ -327,6 +322,50 @@
             GroupLabel.Text = "Group 11";
             GroupLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // menuStrip1
+            // 
+            menuStrip1.AutoSize = false;
+            menuStrip1.Dock = DockStyle.None;
+            menuStrip1.GripMargin = new Padding(5);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem });
+            menuStrip1.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Margin = new Padding(9);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Padding = new Padding(0);
+            menuStrip1.RenderMode = ToolStripRenderMode.System;
+            menuStrip1.Size = new Size(172, 42);
+            menuStrip1.TabIndex = 6;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // menuToolStripMenuItem
+            // 
+            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { submitHintToolStripMenuItem, newGameToolStripMenuItem, exitToolStripMenuItem });
+            menuToolStripMenuItem.Name = "menuToolStripMenuItem";
+            menuToolStripMenuItem.Size = new Size(50, 42);
+            menuToolStripMenuItem.Text = "Menu";
+            // 
+            // submitHintToolStripMenuItem
+            // 
+            submitHintToolStripMenuItem.Name = "submitHintToolStripMenuItem";
+            submitHintToolStripMenuItem.Size = new Size(138, 22);
+            submitHintToolStripMenuItem.Text = "Submit Hint";
+            submitHintToolStripMenuItem.Click += submitToolStripMenuItem_Click;
+            // 
+            // newGameToolStripMenuItem
+            // 
+            newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
+            newGameToolStripMenuItem.Size = new Size(138, 22);
+            newGameToolStripMenuItem.Text = "New Game";
+            newGameToolStripMenuItem.Click += newGameToolStripMenuItem_Click;
+            // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new Size(138, 22);
+            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            // 
             // ExitButton
             // 
             ExitButton.Dock = DockStyle.Right;
@@ -342,74 +381,6 @@
             ExitButton.TextAlign = ContentAlignment.TopCenter;
             ExitButton.UseVisualStyleBackColor = true;
             ExitButton.Click += ExitButton_Click;
-            // 
-            // menuStrip1
-            // 
-            menuStrip1.AutoSize = false;
-            menuStrip1.Dock = DockStyle.None;
-            menuStrip1.GripMargin = new Padding(5);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem, toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem3 });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Margin = new Padding(9);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Padding = new Padding(0);
-            menuStrip1.RenderMode = ToolStripRenderMode.System;
-            menuStrip1.Size = new Size(172, 42);
-            menuStrip1.TabIndex = 31;
-            menuStrip1.Text = "menuStrip1";
-            // 
-            // menuToolStripMenuItem
-            // 
-            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { pauseToolStripMenuItem, submitToolStripMenuItem, revealToolStripMenuItem, newgameToolStripMenuItem, exitToolStripMenuItem });
-            menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            menuToolStripMenuItem.Size = new Size(50, 42);
-            menuToolStripMenuItem.Text = "Menu";
-            // 
-            // pauseToolStripMenuItem
-            // 
-            pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            pauseToolStripMenuItem.Size = new Size(132, 22);
-            // 
-            // submitToolStripMenuItem
-            // 
-            submitToolStripMenuItem.Name = "submitToolStripMenuItem";
-            submitToolStripMenuItem.Size = new Size(132, 22);
-            submitToolStripMenuItem.Text = "Submit";
-            // 
-            // revealToolStripMenuItem
-            // 
-            revealToolStripMenuItem.Name = "revealToolStripMenuItem";
-            revealToolStripMenuItem.Size = new Size(132, 22);
-            // 
-            // newgameToolStripMenuItem
-            // 
-            newgameToolStripMenuItem.Name = "newgameToolStripMenuItem";
-            newgameToolStripMenuItem.Size = new Size(132, 22);
-            newgameToolStripMenuItem.Text = "New Game";
-            // 
-            // exitToolStripMenuItem
-            // 
-            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(132, 22);
-            exitToolStripMenuItem.Text = "Exit ";
-            // 
-            // toolStripMenuItem1
-            // 
-            toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(125, 42);
-            toolStripMenuItem1.Text = "toolStripMenuItem1";
-            // 
-            // toolStripMenuItem2
-            // 
-            toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(125, 42);
-            toolStripMenuItem2.Text = "toolStripMenuItem2";
-            // 
-            // toolStripMenuItem3
-            // 
-            toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(125, 42);
-            toolStripMenuItem3.Text = "toolStripMenuItem3";
             // 
             // CodeBreakerForm
             // 
@@ -431,6 +402,7 @@
             Controls.Add(panel1);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.None;
+            MainMenuStrip = menuStrip1;
             Name = "CodeBreakerForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "CodeBreakerForm";
@@ -470,13 +442,8 @@
         private Button newGameBtn;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem menuToolStripMenuItem;
-        private ToolStripMenuItem pauseToolStripMenuItem;
-        private ToolStripMenuItem submitToolStripMenuItem;
-        private ToolStripMenuItem revealToolStripMenuItem;
-        private ToolStripMenuItem newgameToolStripMenuItem;
+        private ToolStripMenuItem submitHintToolStripMenuItem;
+        private ToolStripMenuItem newGameToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
-        private ToolStripMenuItem toolStripMenuItem1;
-        private ToolStripMenuItem toolStripMenuItem2;
-        private ToolStripMenuItem toolStripMenuItem3;
     }
 }
