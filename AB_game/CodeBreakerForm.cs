@@ -1,5 +1,4 @@
 ﻿using CIS3433;
-
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,7 +8,7 @@ namespace AB_game
 {
     public partial class CodeBreakerForm : Form
     {
-        //private CodeBreakerGame codeBreakerGame;
+        private CodeBreakerGame codeBreakerGame;
         private string groupValue;
         private bool isDragging;
         private Point lastCursor;
@@ -30,13 +29,73 @@ namespace AB_game
         {
             InitializeComponent();
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
-            ExitPanel.MouseDown += ExitPanel_MouseDown;
-            ExitPanel.MouseMove += ExitPanel_MouseMove;
-            ExitPanel.MouseUp += ExitPanel_MouseUp;
+
+            codeBreakerGame = new CodeBreakerGame();
 
             this.groupValue = groupValue;
             GroupLabel.Text += " vs. Group " + groupValue;
-            //codeBreakerGame = new CodeBreakerGame(secretNumber);
+
+            menuStrip1.BackColor = Color.FromArgb(72, 77, 99);
+            menuStrip1.ForeColor = Color.White;
+            menuStrip1.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+
+            foreach (ToolStripMenuItem item in menuStrip1.Items)
+            {
+                item.BackColor = Color.FromArgb(72, 77, 99);
+                item.ForeColor = Color.White;
+                item.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            }
+
+            // Attach mouse event handlers to ExitPanel, NamePanel, and GroupLabel
+            ExitPanel.MouseDown += PanelMouseDown;
+            ExitPanel.MouseMove += PanelMouseMove;
+            ExitPanel.MouseUp += PanelMouseUp;
+            NamePanel.MouseDown += PanelMouseDown;
+            NamePanel.MouseMove += PanelMouseMove;
+            NamePanel.MouseUp += PanelMouseUp;
+            GroupLabel.MouseDown += PanelMouseDown;
+            GroupLabel.MouseMove += PanelMouseMove;
+            GroupLabel.MouseUp += PanelMouseUp;
+
+            // Generate the initial guess
+            string initialGuess = codeBreakerGame.GenerateInitialGuess();
+            PopulateGuessLabels(initialGuess);
+        }
+
+        private void PopulateGuessLabels(string guess)
+        {
+            GuessLabel_1.Text = guess[0].ToString();
+            GuessLabel_2.Text = guess[1].ToString();
+            GuessLabel_3.Text = guess[2].ToString();
+            GuessLabel_4.Text = guess[3].ToString();
+        }
+
+        // Rename the mouse event handlers to be more generic
+        private void PanelMouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                lastCursor = Cursor.Position;
+                lastForm = this.Location;
+            }
+        }
+
+        private void PanelMouseMove(object? sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Point deltaCursor = Point.Subtract(Cursor.Position, new Size(lastCursor));
+                this.Location = Point.Add(lastForm, new Size(deltaCursor));
+            }
+        }
+
+        private void PanelMouseUp(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = false;
+            }
         }
 
         private void ExitPanel_MouseDown(object? sender, MouseEventArgs e)
@@ -66,27 +125,6 @@ namespace AB_game
             }
         }
 
-        private void makeGuessButton_Click(object sender, EventArgs e)
-        {
-            // string guess = guessTextBox.Text;
-            // codeBreakerGame.MakeGuess(guess);
-            // Display or use the guess and score as needed
-            // guessesList.Items.Add(guess);
-        }
-
-        private void calculateScoreButton_Click(object sender, EventArgs e)
-        {
-            //double score = codeBreakerGame.CalculateScore();
-            // Display or use the calculated score as needed
-            // scoreLabel.Text = score.ToString();
-        }
-
-        private void generateSecretNumberButton_Click(object sender, EventArgs e)
-        {
-            // string secretNumber = GenerateSecretNumber();
-            // secretNumberTextBox.Text = secretNumber;
-        }
-
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
@@ -99,9 +137,42 @@ namespace AB_game
             this.Close();
         }
 
-        private void RevealButton_Click(object sender, EventArgs e)
+        private void SubmitHintButton_Click(object sender, EventArgs e)
         {
+            int bulls, cows;
 
+            if (!int.TryParse(hintTextBox_1.Text, out bulls))
+            {
+                // Handle invalid input for bulls
+                MessageBox.Show("Please enter a valid number for bulls.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!int.TryParse(hintTextBox_2.Text, out cows))
+            {
+                // Handle invalid input for cows
+                MessageBox.Show("Please enter a valid number for cows.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string currentGuess = GuessLabel_1.Text + GuessLabel_2.Text + GuessLabel_3.Text + GuessLabel_4.Text;
+
+            // Add the current guess and hint to the DataGridView
+            string hint = $"{bulls}A{cows}B";
+            AddGuessToDataGridView(currentGuess, hint);
+
+            string nextGuess = codeBreakerGame.MakeGuess(bulls, cows);
+            PopulateGuessLabels(nextGuess);
+
+            // Clear the input fields
+            hintTextBox_1.Text = string.Empty;
+            hintTextBox_2.Text = string.Empty;
+        }
+
+        private void AddGuessToDataGridView(string guess, string hint)
+        {
+            int rowNumber = dataGridView1.Rows.Count;
+            dataGridView1.Rows.Add(rowNumber, guess, hint);
         }
     }
 }
