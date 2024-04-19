@@ -57,6 +57,7 @@ namespace AB_game
             GroupLabel.MouseMove += PanelMouseMove;
             GroupLabel.MouseUp += PanelMouseUp;
 
+
             // Generate the initial guess
             string initialGuess = codeBreakerGame.GenerateInitialGuess();
             PopulateGuessLabels(initialGuess);
@@ -167,12 +168,65 @@ namespace AB_game
             // Clear the input fields
             hintTextBox_1.Text = string.Empty;
             hintTextBox_2.Text = string.Empty;
+
+            hintTextBox_1.Focus();
         }
 
         private void AddGuessToDataGridView(string guess, string hint)
         {
             int rowNumber = dataGridView1.Rows.Count;
             dataGridView1.Rows.Add(rowNumber, guess, hint);
+        }
+
+        private void newGameBtn_Click(object sender, EventArgs e)
+        {
+            hintTextBox_1.Text = "";
+            hintTextBox_2.Text = "";
+
+            dataGridView1.Rows.Clear();
+
+            codeBreakerGame = new CodeBreakerGame();
+
+            string newInitialGuess = codeBreakerGame.GenerateInitialGuess();
+            PopulateGuessLabels(newInitialGuess);
+        }
+
+        private void hintTextBox_1_TextChanged(object sender, EventArgs e)
+        {
+            if (hintTextBox_1.Text.Length == 1 && char.IsDigit(hintTextBox_1.Text[0]))
+            {
+                hintTextBox_2.Focus();
+            }
+        }
+
+        private void hintTextBox_2_TextChanged(object sender, EventArgs e)
+        {
+            if (hintTextBox_2.Text.Length == 1 && char.IsDigit(hintTextBox_2.Text[0]))
+            {
+                SubmitHintButton.Focus();
+            }
+        }
+
+        private void SubmitHintButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                hintTextBox_2.Focus();
+                hintTextBox_2.Text = "";
+            }
+        }
+
+        private void hintTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox? currentTextBox = sender as TextBox;
+            if (e.KeyCode == Keys.Back && currentTextBox != null && currentTextBox.Text.Length == 0)
+            {
+                if (currentTextBox == hintTextBox_2)
+                {
+                    hintTextBox_1.Focus();
+                    hintTextBox_1.Text = "";
+                }
+            }
         }
     }
 }
