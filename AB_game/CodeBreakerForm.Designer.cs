@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
@@ -56,11 +57,16 @@
             newGameToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
             ExitButton = new Button();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            submitHintToolStripMenuItem1 = new ToolStripMenuItem();
+            newGameToolStripMenuItem1 = new ToolStripMenuItem();
+            exitToolStripMenuItem1 = new ToolStripMenuItem();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ExitPanel.SuspendLayout();
             NamePanel.SuspendLayout();
             menuStrip1.SuspendLayout();
+            contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -382,12 +388,40 @@
             ExitButton.UseVisualStyleBackColor = true;
             ExitButton.Click += ExitButton_Click;
             // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { submitHintToolStripMenuItem1, newGameToolStripMenuItem1, exitToolStripMenuItem1 });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(139, 70);
+            // 
+            // submitHintToolStripMenuItem1
+            // 
+            submitHintToolStripMenuItem1.Name = "submitHintToolStripMenuItem1";
+            submitHintToolStripMenuItem1.Size = new Size(138, 22);
+            submitHintToolStripMenuItem1.Text = "Submit Hint";
+            submitHintToolStripMenuItem1.Click += submitHintToolStripMenuItem1_Click;
+            // 
+            // newGameToolStripMenuItem1
+            // 
+            newGameToolStripMenuItem1.Name = "newGameToolStripMenuItem1";
+            newGameToolStripMenuItem1.Size = new Size(138, 22);
+            newGameToolStripMenuItem1.Text = "New Game";
+            newGameToolStripMenuItem1.Click += newGameToolStripMenuItem1_Click;
+            // 
+            // exitToolStripMenuItem1
+            // 
+            exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            exitToolStripMenuItem1.Size = new Size(138, 22);
+            exitToolStripMenuItem1.Text = "Exit";
+            exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
+            // 
             // CodeBreakerForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(46, 51, 73);
             ClientSize = new Size(1100, 700);
+            ContextMenuStrip = contextMenuStrip1;
             Controls.Add(ExitPanel);
             Controls.Add(GuessLabel_4);
             Controls.Add(GuessLabel_3);
@@ -414,6 +448,7 @@
             NamePanel.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -445,5 +480,9 @@
         private ToolStripMenuItem submitHintToolStripMenuItem;
         private ToolStripMenuItem newGameToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem submitHintToolStripMenuItem1;
+        private ToolStripMenuItem newGameToolStripMenuItem1;
+        private ToolStripMenuItem exitToolStripMenuItem1;
     }
 }

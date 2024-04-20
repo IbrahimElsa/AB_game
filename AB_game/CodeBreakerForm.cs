@@ -263,5 +263,20 @@ namespace AB_game
         {
             ExitButton_Click(sender, e);
         }
+
+        private void submitHintToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SubmitHintButton_Click(sender, e);
+        }
+
+        private void newGameToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            newGameBtn_Click(sender, e);
+        }
+
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ExitButton_Click(sender, e);
+        }
     }
 }
