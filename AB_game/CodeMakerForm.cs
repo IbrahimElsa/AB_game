@@ -281,6 +281,8 @@ namespace AB_game
                 CodeMakerTimer.Start();
                 timerPaused = false;
                 TimerButton.Text = "Pause";
+                pauseToolStripMenuItem.Text = "Pause";
+                pauseToolStripMenuItem1.Text = "Pause";
                 guessTextBox_1.Enabled = true;
                 guessTextBox_2.Enabled = true;
                 guessTextBox_3.Enabled = true;
@@ -292,6 +294,8 @@ namespace AB_game
                 CodeMakerTimer.Stop();
                 timerPaused = true;
                 TimerButton.Text = "Play";
+                pauseToolStripMenuItem.Text = "Play";
+                pauseToolStripMenuItem1.Text = "Play";
                 guessTextBox_1.Enabled = false;
                 guessTextBox_2.Enabled = false;
                 guessTextBox_3.Enabled = false;
@@ -396,6 +400,31 @@ namespace AB_game
         private void ExitButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void pauseToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            TimerButton_Click(sender, e);
+        }
+
+        private void submitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SubmitGuessButton_Click(sender, e);
+        }
+
+        private void newGameToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            NewGameButton_Click(sender, e);
+        }
+
+        private void revealToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            RevealButton_Click(sender, e);
+        }
+
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ExitButton_Click(sender, e);
         }
     }
 }
