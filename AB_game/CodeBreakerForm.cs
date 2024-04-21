@@ -9,6 +9,8 @@ namespace AB_game
     public partial class CodeBreakerForm : Form
     {
         private CodeBreakerGame codeBreakerGame;
+        private bool timerPaused;
+        private int elapsedSeconds;
         private string groupValue;
         private bool isDragging;
         private Point lastCursor;
@@ -28,11 +30,16 @@ namespace AB_game
         public CodeBreakerForm(string groupValue)
         {
             InitializeComponent();
-
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
+
             codeBreakerGame = new CodeBreakerGame();
+
             this.groupValue = groupValue;
             GroupLabel.Text += " vs. Group " + groupValue;
+            timerPaused = false;
+            elapsedSeconds = 0;
+
+            codeBreakerGame.GenerateInitialGuess();
 
             menuStrip1.BackColor = Color.FromArgb(72, 77, 99);
             menuStrip1.ForeColor = Color.White;
@@ -61,7 +68,13 @@ namespace AB_game
             string initialGuess = codeBreakerGame.GenerateInitialGuess();
             PopulateGuessLabels(initialGuess);
         }
-
+        private void CodeBreakerTimer_Tick(object sender, EventArgs e)
+        {
+            elapsedSeconds++;
+            int minutes = elapsedSeconds / 60;
+            int seconds = elapsedSeconds % 60;
+            TimerLabel.Text = $"Timer: {minutes:D2}:{seconds:D2}";
+        }
         private void PopulateGuessLabels(string guess)
         {
             GuessLabel_1.Text = guess[0].ToString();
@@ -171,6 +184,11 @@ namespace AB_game
             {
                 return;
             }
+            if (!CodeBreakerTimer.Enabled)
+            {
+                CodeBreakerTimer.Start();
+                TimerButton.Visible = true;
+            }
 
             string nextGuess = codeBreakerGame.MakeGuess(bulls, cows);
 
@@ -206,7 +224,6 @@ namespace AB_game
             string newInitialGuess = codeBreakerGame.GenerateInitialGuess();
             PopulateGuessLabels(newInitialGuess);
         }
-
         private void hintTextBox_1_TextChanged(object sender, EventArgs e)
         {
             if (hintTextBox_1.Text.Length == 1 && char.IsDigit(hintTextBox_1.Text[0]))
@@ -244,7 +261,10 @@ namespace AB_game
                 }
             }
         }
-
+        private void pauseStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            TimerButton_Click(sender, e);
+        }
         private void submitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SubmitHintButton_Click(sender, e);
@@ -273,6 +293,41 @@ namespace AB_game
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ExitButton_Click(sender, e);
+        }
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TimerButton_Click(sender, e);
+        }
+
+        private void TimerButton_Click(object sender, EventArgs e)
+        {
+            if (!TimerButton.Visible)
+            {
+                return;
+            }
+
+            if (timerPaused)
+            {
+                // Resume the timer
+                CodeBreakerTimer.Start();
+                timerPaused = false;
+                TimerButton.Text = "Pause";
+                pauseToolStripMenuItem.Text = "Pause";
+                pauseStripMenuItem1.Text = "Pause";
+                hintTextBox_1.Enabled = true;
+                hintTextBox_2.Enabled = true;
+            }
+            else
+            {
+                // Pause the timer
+                CodeBreakerTimer.Stop();
+                timerPaused = true;
+                TimerButton.Text = "Play";
+                pauseToolStripMenuItem.Text = "Play";
+                pauseStripMenuItem1.Text = "Play";
+                hintTextBox_1.Enabled = false;
+                hintTextBox_2.Enabled = false;
+            }
         }
     }
 }

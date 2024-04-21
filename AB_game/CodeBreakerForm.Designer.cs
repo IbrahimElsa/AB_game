@@ -34,6 +34,8 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             label1 = new Label();
             panel1 = new Panel();
+            TimerButton = new Button();
+            TimerLabel = new Label();
             newGameBtn = new Button();
             hintTextBox_1 = new TextBox();
             hintTextBox_2 = new TextBox();
@@ -49,23 +51,26 @@
             GuessLabel_3 = new Label();
             GuessLabel_4 = new Label();
             ExitPanel = new Panel();
-            NamePanel = new Panel();
-            GroupLabel = new Label();
             menuStrip1 = new MenuStrip();
             menuToolStripMenuItem = new ToolStripMenuItem();
+            pauseStripMenuItem1 = new ToolStripMenuItem();
             submitHintToolStripMenuItem = new ToolStripMenuItem();
             newGameToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
+            NamePanel = new Panel();
+            GroupLabel = new Label();
             ExitButton = new Button();
             contextMenuStrip1 = new ContextMenuStrip(components);
+            pauseToolStripMenuItem = new ToolStripMenuItem();
             submitHintToolStripMenuItem1 = new ToolStripMenuItem();
             newGameToolStripMenuItem1 = new ToolStripMenuItem();
             exitToolStripMenuItem1 = new ToolStripMenuItem();
+            CodeBreakerTimer = new System.Windows.Forms.Timer(components);
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ExitPanel.SuspendLayout();
-            NamePanel.SuspendLayout();
             menuStrip1.SuspendLayout();
+            NamePanel.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -83,12 +88,42 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(newGameBtn);
+            panel1.Controls.Add(TimerButton);
+            panel1.Controls.Add(TimerLabel);
             panel1.Controls.Add(label1);
             panel1.Location = new Point(12, 46);
             panel1.Name = "panel1";
             panel1.Size = new Size(1076, 67);
             panel1.TabIndex = 8;
+            // 
+            // TimerButton
+            // 
+            TimerButton.Dock = DockStyle.Right;
+            TimerButton.FlatAppearance.BorderColor = Color.White;
+            TimerButton.FlatStyle = FlatStyle.Flat;
+            TimerButton.Font = new Font("Segoe UI", 24F);
+            TimerButton.ForeColor = Color.LightGray;
+            TimerButton.ImageAlign = ContentAlignment.TopCenter;
+            TimerButton.Location = new Point(910, 0);
+            TimerButton.Name = "TimerButton";
+            TimerButton.Size = new Size(166, 67);
+            TimerButton.TabIndex = 42;
+            TimerButton.Text = "Pause";
+            TimerButton.UseVisualStyleBackColor = true;
+            TimerButton.Visible = false;
+            TimerButton.Click += TimerButton_Click;
+            // 
+            // TimerLabel
+            // 
+            TimerLabel.AutoSize = true;
+            TimerLabel.Font = new Font("Segoe UI", 26F);
+            TimerLabel.ImageAlign = ContentAlignment.BottomCenter;
+            TimerLabel.Location = new Point(498, 3);
+            TimerLabel.Name = "TimerLabel";
+            TimerLabel.Padding = new Padding(9);
+            TimerLabel.Size = new Size(226, 65);
+            TimerLabel.TabIndex = 41;
+            TimerLabel.Text = "Timer: 00:00";
             // 
             // newGameBtn
             // 
@@ -97,7 +132,7 @@
             newGameBtn.Font = new Font("Segoe UI", 24F);
             newGameBtn.ForeColor = Color.LightGray;
             newGameBtn.ImageAlign = ContentAlignment.TopCenter;
-            newGameBtn.Location = new Point(869, 8);
+            newGameBtn.Location = new Point(177, 631);
             newGameBtn.Name = "newGameBtn";
             newGameBtn.Size = new Size(204, 56);
             newGameBtn.TabIndex = 41;
@@ -294,8 +329,8 @@
             // ExitPanel
             // 
             ExitPanel.BackColor = Color.FromArgb(72, 77, 99);
-            ExitPanel.Controls.Add(NamePanel);
             ExitPanel.Controls.Add(menuStrip1);
+            ExitPanel.Controls.Add(NamePanel);
             ExitPanel.Controls.Add(ExitButton);
             ExitPanel.Dock = DockStyle.Top;
             ExitPanel.ForeColor = Color.Transparent;
@@ -303,6 +338,57 @@
             ExitPanel.Name = "ExitPanel";
             ExitPanel.Size = new Size(1100, 40);
             ExitPanel.TabIndex = 40;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.AutoSize = false;
+            menuStrip1.Dock = DockStyle.None;
+            menuStrip1.GripMargin = new Padding(5);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem });
+            menuStrip1.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Margin = new Padding(9);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Padding = new Padding(0);
+            menuStrip1.RenderMode = ToolStripRenderMode.System;
+            menuStrip1.Size = new Size(172, 42);
+            menuStrip1.TabIndex = 6;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // menuToolStripMenuItem
+            // 
+            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { pauseStripMenuItem1, submitHintToolStripMenuItem, newGameToolStripMenuItem, exitToolStripMenuItem });
+            menuToolStripMenuItem.Name = "menuToolStripMenuItem";
+            menuToolStripMenuItem.Size = new Size(50, 42);
+            menuToolStripMenuItem.Text = "Menu";
+            // 
+            // pauseStripMenuItem1
+            // 
+            pauseStripMenuItem1.Name = "pauseStripMenuItem1";
+            pauseStripMenuItem1.Size = new Size(138, 22);
+            pauseStripMenuItem1.Text = "Pause";
+            pauseStripMenuItem1.Click += pauseStripMenuItem1_Click;
+            // 
+            // submitHintToolStripMenuItem
+            // 
+            submitHintToolStripMenuItem.Name = "submitHintToolStripMenuItem";
+            submitHintToolStripMenuItem.Size = new Size(138, 22);
+            submitHintToolStripMenuItem.Text = "Submit Hint";
+            submitHintToolStripMenuItem.Click += submitToolStripMenuItem_Click;
+            // 
+            // newGameToolStripMenuItem
+            // 
+            newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
+            newGameToolStripMenuItem.Size = new Size(138, 22);
+            newGameToolStripMenuItem.Text = "New Game";
+            newGameToolStripMenuItem.Click += newGameToolStripMenuItem_Click;
+            // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new Size(138, 22);
+            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // NamePanel
             // 
@@ -328,50 +414,6 @@
             GroupLabel.Text = "Group 11";
             GroupLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // menuStrip1
-            // 
-            menuStrip1.AutoSize = false;
-            menuStrip1.Dock = DockStyle.None;
-            menuStrip1.GripMargin = new Padding(5);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem });
-            menuStrip1.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Margin = new Padding(9);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Padding = new Padding(0);
-            menuStrip1.RenderMode = ToolStripRenderMode.System;
-            menuStrip1.Size = new Size(172, 42);
-            menuStrip1.TabIndex = 6;
-            menuStrip1.Text = "menuStrip1";
-            // 
-            // menuToolStripMenuItem
-            // 
-            menuToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { submitHintToolStripMenuItem, newGameToolStripMenuItem, exitToolStripMenuItem });
-            menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            menuToolStripMenuItem.Size = new Size(50, 42);
-            menuToolStripMenuItem.Text = "Menu";
-            // 
-            // submitHintToolStripMenuItem
-            // 
-            submitHintToolStripMenuItem.Name = "submitHintToolStripMenuItem";
-            submitHintToolStripMenuItem.Size = new Size(138, 22);
-            submitHintToolStripMenuItem.Text = "Submit Hint";
-            submitHintToolStripMenuItem.Click += submitToolStripMenuItem_Click;
-            // 
-            // newGameToolStripMenuItem
-            // 
-            newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-            newGameToolStripMenuItem.Size = new Size(138, 22);
-            newGameToolStripMenuItem.Text = "New Game";
-            newGameToolStripMenuItem.Click += newGameToolStripMenuItem_Click;
-            // 
-            // exitToolStripMenuItem
-            // 
-            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(138, 22);
-            exitToolStripMenuItem.Text = "Exit";
-            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
-            // 
             // ExitButton
             // 
             ExitButton.Dock = DockStyle.Right;
@@ -390,9 +432,16 @@
             // 
             // contextMenuStrip1
             // 
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { submitHintToolStripMenuItem1, newGameToolStripMenuItem1, exitToolStripMenuItem1 });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { pauseToolStripMenuItem, submitHintToolStripMenuItem1, newGameToolStripMenuItem1, exitToolStripMenuItem1 });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(139, 70);
+            contextMenuStrip1.Size = new Size(139, 92);
+            // 
+            // pauseToolStripMenuItem
+            // 
+            pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            pauseToolStripMenuItem.Size = new Size(138, 22);
+            pauseToolStripMenuItem.Text = "Pause";
+            pauseToolStripMenuItem.Click += pauseToolStripMenuItem_Click;
             // 
             // submitHintToolStripMenuItem1
             // 
@@ -415,6 +464,11 @@
             exitToolStripMenuItem1.Text = "Exit";
             exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
             // 
+            // CodeBreakerTimer
+            // 
+            CodeBreakerTimer.Interval = 1000;
+            CodeBreakerTimer.Tick += CodeBreakerTimer_Tick;
+            // 
             // CodeBreakerForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -422,6 +476,7 @@
             BackColor = Color.FromArgb(46, 51, 73);
             ClientSize = new Size(1100, 700);
             ContextMenuStrip = contextMenuStrip1;
+            Controls.Add(newGameBtn);
             Controls.Add(ExitPanel);
             Controls.Add(GuessLabel_4);
             Controls.Add(GuessLabel_3);
@@ -444,10 +499,10 @@
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ExitPanel.ResumeLayout(false);
-            NamePanel.ResumeLayout(false);
-            NamePanel.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            NamePanel.ResumeLayout(false);
+            NamePanel.PerformLayout();
             contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -484,5 +539,10 @@
         private ToolStripMenuItem submitHintToolStripMenuItem1;
         private ToolStripMenuItem newGameToolStripMenuItem1;
         private ToolStripMenuItem exitToolStripMenuItem1;
+        private Label TimerLabel;
+        private System.Windows.Forms.Timer CodeBreakerTimer;
+        private Button TimerButton;
+        private ToolStripMenuItem pauseStripMenuItem1;
+        private ToolStripMenuItem pauseToolStripMenuItem;
     }
 }
