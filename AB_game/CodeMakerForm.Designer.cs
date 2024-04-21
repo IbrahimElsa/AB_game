@@ -286,40 +286,40 @@
             // 
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { pauseToolStripMenuItem1, submitToolStripMenuItem1, newGameToolStripMenuItem1, revealToolStripMenuItem1, exitToolStripMenuItem1 });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(181, 136);
+            contextMenuStrip1.Size = new Size(143, 114);
             // 
             // pauseToolStripMenuItem1
             // 
             pauseToolStripMenuItem1.Name = "pauseToolStripMenuItem1";
-            pauseToolStripMenuItem1.Size = new Size(180, 22);
+            pauseToolStripMenuItem1.Size = new Size(142, 22);
             pauseToolStripMenuItem1.Text = "Pause";
             pauseToolStripMenuItem1.Click += pauseToolStripMenuItem1_Click;
             // 
             // submitToolStripMenuItem1
             // 
             submitToolStripMenuItem1.Name = "submitToolStripMenuItem1";
-            submitToolStripMenuItem1.Size = new Size(180, 22);
+            submitToolStripMenuItem1.Size = new Size(142, 22);
             submitToolStripMenuItem1.Text = "Submit";
             submitToolStripMenuItem1.Click += submitToolStripMenuItem1_Click;
             // 
             // newGameToolStripMenuItem1
             // 
             newGameToolStripMenuItem1.Name = "newGameToolStripMenuItem1";
-            newGameToolStripMenuItem1.Size = new Size(180, 22);
+            newGameToolStripMenuItem1.Size = new Size(142, 22);
             newGameToolStripMenuItem1.Text = "New Game";
             newGameToolStripMenuItem1.Click += newGameToolStripMenuItem1_Click;
             // 
             // revealToolStripMenuItem1
             // 
             revealToolStripMenuItem1.Name = "revealToolStripMenuItem1";
-            revealToolStripMenuItem1.Size = new Size(180, 22);
+            revealToolStripMenuItem1.Size = new Size(142, 22);
             revealToolStripMenuItem1.Text = "Reveal secret";
             revealToolStripMenuItem1.Click += revealToolStripMenuItem1_Click;
             // 
             // exitToolStripMenuItem1
             // 
             exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            exitToolStripMenuItem1.Size = new Size(180, 22);
+            exitToolStripMenuItem1.Size = new Size(142, 22);
             exitToolStripMenuItem1.Text = "Exit";
             exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
             // 
