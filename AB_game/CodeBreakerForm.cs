@@ -68,107 +68,12 @@ namespace AB_game
             string initialGuess = codeBreakerGame.GenerateInitialGuess();
             PopulateGuessLabels(initialGuess);
         }
-        private void CodeBreakerTimer_Tick(object sender, EventArgs e)
-        {
-            elapsedSeconds++;
-            int minutes = elapsedSeconds / 60;
-            int seconds = elapsedSeconds % 60;
-            TimerLabel.Text = $"Timer: {minutes:D2}:{seconds:D2}";
-        }
         private void PopulateGuessLabels(string guess)
         {
             GuessLabel_1.Text = guess[0].ToString();
             GuessLabel_2.Text = guess[1].ToString();
             GuessLabel_3.Text = guess[2].ToString();
             GuessLabel_4.Text = guess[3].ToString();
-        }
-
-        public class CustomMenuRenderer : ToolStripProfessionalRenderer
-        {
-            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
-            {
-                if (e.Item.Selected)
-                {
-                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(86, 92, 118)), e.Item.ContentRectangle);
-                }
-                else
-                {
-                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(72, 77, 99)), e.Item.ContentRectangle);
-                }
-            }
-
-            protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
-            {
-                e.TextColor = Color.White;
-                base.OnRenderItemText(e);
-            }
-        }
-
-        // Rename the mouse event handlers to be more generic
-        private void PanelMouseDown(object? sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                isDragging = true;
-                lastCursor = Cursor.Position;
-                lastForm = this.Location;
-            }
-        }
-
-        private void PanelMouseMove(object? sender, MouseEventArgs e)
-        {
-            if (isDragging)
-            {
-                Point deltaCursor = Point.Subtract(Cursor.Position, new Size(lastCursor));
-                this.Location = Point.Add(lastForm, new Size(deltaCursor));
-            }
-        }
-
-        private void PanelMouseUp(object? sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                isDragging = false;
-            }
-        }
-
-        private void ExitPanel_MouseDown(object? sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                isDragging = true;
-                lastCursor = Cursor.Position;
-                lastForm = this.Location;
-            }
-        }
-
-        private void ExitPanel_MouseMove(object? sender, MouseEventArgs e)
-        {
-            if (isDragging)
-            {
-                Point deltaCursor = Point.Subtract(Cursor.Position, new Size(lastCursor));
-                this.Location = Point.Add(lastForm, new Size(deltaCursor));
-            }
-        }
-
-        private void ExitPanel_MouseUp(object? sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                isDragging = false;
-            }
-        }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            WelcomeForm welcomeForm = new WelcomeForm();
-            welcomeForm.Show();
-        }
-
-        private void ExitButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void SubmitHintButton_Click(object sender, EventArgs e)
@@ -239,16 +144,6 @@ namespace AB_game
                 SubmitHintButton.Focus();
             }
         }
-
-        private void SubmitHintButton_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Back)
-            {
-                hintTextBox_2.Focus();
-                hintTextBox_2.Text = "";
-            }
-        }
-
         private void hintTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             TextBox? currentTextBox = sender as TextBox;
@@ -261,44 +156,24 @@ namespace AB_game
                 }
             }
         }
-        private void pauseStripMenuItem1_Click(object sender, EventArgs e)
+        private void SubmitHintButton_KeyDown(object sender, KeyEventArgs e)
         {
-            TimerButton_Click(sender, e);
-        }
-        private void submitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SubmitHintButton_Click(sender, e);
-        }
-
-        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newGameBtn_Click(sender, e);
+            if (e.KeyCode == Keys.Back)
+            {
+                hintTextBox_2.Focus();
+                hintTextBox_2.Text = "";
+            }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ExitButton_Click(sender, e);
-        }
 
-        private void submitHintToolStripMenuItem1_Click(object sender, EventArgs e)
+        // Timer Logic
+        private void CodeBreakerTimer_Tick(object sender, EventArgs e)
         {
-            SubmitHintButton_Click(sender, e);
+            elapsedSeconds++;
+            int minutes = elapsedSeconds / 60;
+            int seconds = elapsedSeconds % 60;
+            TimerLabel.Text = $"Timer: {minutes:D2}:{seconds:D2}";
         }
-
-        private void newGameToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            newGameBtn_Click(sender, e);
-        }
-
-        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            ExitButton_Click(sender, e);
-        }
-        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TimerButton_Click(sender, e);
-        }
-
         private void TimerButton_Click(object sender, EventArgs e)
         {
             if (!TimerButton.Visible)
@@ -308,7 +183,6 @@ namespace AB_game
 
             if (timerPaused)
             {
-                // Resume the timer
                 CodeBreakerTimer.Start();
                 timerPaused = false;
                 TimerButton.Text = "Pause";
@@ -319,7 +193,6 @@ namespace AB_game
             }
             else
             {
-                // Pause the timer
                 CodeBreakerTimer.Stop();
                 timerPaused = true;
                 TimerButton.Text = "Play";
@@ -328,6 +201,123 @@ namespace AB_game
                 hintTextBox_1.Enabled = false;
                 hintTextBox_2.Enabled = false;
             }
+        }
+
+
+
+
+
+
+        // UI Logic
+        public class CustomMenuRenderer : ToolStripProfessionalRenderer
+        {
+            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+            {
+                if (e.Item.Selected)
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(86, 92, 118)), e.Item.ContentRectangle);
+                }
+                else
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(72, 77, 99)), e.Item.ContentRectangle);
+                }
+            }
+
+            protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+            {
+                e.TextColor = Color.White;
+                base.OnRenderItemText(e);
+            }
+        }
+        private void PanelMouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                lastCursor = Cursor.Position;
+                lastForm = this.Location;
+            }
+        }
+        private void PanelMouseMove(object? sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Point deltaCursor = Point.Subtract(Cursor.Position, new Size(lastCursor));
+                this.Location = Point.Add(lastForm, new Size(deltaCursor));
+            }
+        }
+        private void PanelMouseUp(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = false;
+            }
+        }
+        private void ExitPanel_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                lastCursor = Cursor.Position;
+                lastForm = this.Location;
+            }
+        }
+        private void ExitPanel_MouseMove(object? sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Point deltaCursor = Point.Subtract(Cursor.Position, new Size(lastCursor));
+                this.Location = Point.Add(lastForm, new Size(deltaCursor));
+            }
+        }
+        private void ExitPanel_MouseUp(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = false;
+            }
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            WelcomeForm welcomeForm = new WelcomeForm();
+            welcomeForm.Show();
+        }
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        private void pauseStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            TimerButton_Click(sender, e);
+        }
+        private void submitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SubmitHintButton_Click(sender, e);
+        }
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newGameBtn_Click(sender, e);
+        }
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExitButton_Click(sender, e);
+        }
+        private void submitHintToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SubmitHintButton_Click(sender, e);
+        }
+        private void newGameToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            newGameBtn_Click(sender, e);
+        }
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ExitButton_Click(sender, e);
+        }
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TimerButton_Click(sender, e);
         }
     }
 }

@@ -68,6 +68,230 @@ namespace AB_game
             GroupLabel.MouseUp += PanelMouseUp;
         }
 
+
+        private void Win_Conditions(int GuessNumber)
+        {
+            int Score = 10 * (10 - GuessNumber + 1) - (elapsedSeconds / 10);
+
+            TimerButton.Visible = false;
+            CodeMakerTimer.Stop();
+
+            SecretLabel_1.Text = codeMakerGame.SecretNumber[0].ToString();
+            SecretLabel_2.Text = codeMakerGame.SecretNumber[1].ToString();
+            SecretLabel_3.Text = codeMakerGame.SecretNumber[2].ToString();
+            SecretLabel_4.Text = codeMakerGame.SecretNumber[3].ToString();
+
+            guessTextBox_1.Enabled = false;
+            guessTextBox_2.Enabled = false;
+            guessTextBox_3.Enabled = false;
+            guessTextBox_4.Enabled = false;
+
+            winLabel.Visible = true;
+            winLabel.Text = $"Congratulations! Score: {Score}";
+        }
+        private void SubmitGuessButton_Click(object sender, EventArgs e)
+        {
+            // Check if all guess text boxes are filled with valid numbers
+            if (IsValidGuess())
+            {
+                if (!CodeMakerTimer.Enabled)
+                {
+                    CodeMakerTimer.Start();
+                    TimerButton.Visible = true;
+                }
+
+                string guess = guessTextBox_1.Text + guessTextBox_2.Text + guessTextBox_3.Text + guessTextBox_4.Text;
+                string result = codeMakerGame.EvaluateGuess(guess);
+
+                // Get the current guess number
+                int guessNumber = dataGridView1.Rows.Count;
+
+                // Create a new row with the guess number, guess, and hint
+                dataGridView1.Rows.Add(guessNumber, guess, $"{result[0]}A{result[1]}B");
+
+                if (result[0] == '4')
+                {
+                    Win_Conditions(guessNumber);
+                }
+
+                // Clear the guess text boxes
+                guessTextBox_1.Clear();
+                guessTextBox_2.Clear();
+                guessTextBox_3.Clear();
+                guessTextBox_4.Clear();
+
+                // Set focus to the first guess text box for the next guess
+                guessTextBox_1.Focus();
+            }
+        }
+
+        private bool IsValidGuess()
+        {
+            return !string.IsNullOrEmpty(guessTextBox_1.Text) &&
+                   guessTextBox_1.Text.Length == 1 &&
+                   char.IsDigit(guessTextBox_1.Text[0]) &&
+                   !string.IsNullOrEmpty(guessTextBox_2.Text) &&
+                   guessTextBox_2.Text.Length == 1 &&
+                   char.IsDigit(guessTextBox_2.Text[0]) &&
+                   !string.IsNullOrEmpty(guessTextBox_3.Text) &&
+                   guessTextBox_3.Text.Length == 1 &&
+                   char.IsDigit(guessTextBox_3.Text[0]) &&
+                   !string.IsNullOrEmpty(guessTextBox_4.Text) &&
+                   guessTextBox_4.Text.Length == 1 &&
+                   char.IsDigit(guessTextBox_4.Text[0]);
+        }
+
+        private void RevealButton_Click(object sender, EventArgs e)
+        {
+            if (codeMakerGame.SecretNumber != null)
+            {
+                char[] secretDigits = codeMakerGame.SecretNumber.ToCharArray();
+                SecretLabel_1.Text = secretDigits[0].ToString();
+                SecretLabel_2.Text = secretDigits[1].ToString();
+                SecretLabel_3.Text = secretDigits[2].ToString();
+                SecretLabel_4.Text = secretDigits[3].ToString();
+
+                guessTextBox_1.Enabled = false;
+                guessTextBox_2.Enabled = false;
+                guessTextBox_3.Enabled = false;
+                guessTextBox_4.Enabled = false;
+
+                CodeMakerTimer.Stop();
+                timerPaused = true;
+                TimerButton.Text = "Play";
+                TimerButton.Visible = false;
+            }
+        }
+
+        private void NewGameButton_Click(object sender, EventArgs e)
+        {
+            codeMakerGame.GenerateSecretNumber();
+
+            // Clear the secret labels
+            SecretLabel_1.Text = "?";
+            SecretLabel_2.Text = "?";
+            SecretLabel_3.Text = "?";
+            SecretLabel_4.Text = "?";
+
+            guessTextBox_1.Enabled = true;
+            guessTextBox_2.Enabled = true;
+            guessTextBox_3.Enabled = true;
+            guessTextBox_4.Enabled = true;
+
+            CodeMakerTimer.Stop();
+            timerPaused = false;
+            TimerButton.Text = "Pause";
+            TimerButton.Visible = false;
+            elapsedSeconds = 0;
+            TimerLabel.Text = "Timer: 00:00";
+
+            winLabel.Visible = false;
+            dataGridView1.Rows.Clear();
+        }
+        private void GuessTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox? currentTextBox = sender as TextBox;
+            if (e.KeyCode == Keys.Back && currentTextBox != null && currentTextBox.Text.Length == 0)
+            {
+                // Decide which TextBox to focus based on the sender
+                TextBox? previousTextBox = null;
+                if (currentTextBox == guessTextBox_2) previousTextBox = guessTextBox_1;
+                else if (currentTextBox == guessTextBox_3) previousTextBox = guessTextBox_2;
+                else if (currentTextBox == guessTextBox_4) previousTextBox = guessTextBox_3;
+
+                if (previousTextBox != null)
+                {
+                    previousTextBox.Focus();
+                    previousTextBox.Text = ""; // Move the cursor to the end of the text
+                }
+            }
+        }
+        private void SubmitGuessButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                guessTextBox_4.Focus();
+                guessTextBox_4.Text = "";
+            }
+        }
+        private void guessTextBox_1_TextChanged(object sender, EventArgs e)
+        {
+            if (guessTextBox_1.Text.Length == 1 && char.IsDigit(guessTextBox_1.Text[0]))
+            {
+                guessTextBox_2.Focus();
+            }
+        }
+        private void guessTextBox_2_TextChanged(object sender, EventArgs e)
+        {
+            if (guessTextBox_2.Text.Length == 1 && char.IsDigit(guessTextBox_2.Text[0]))
+            {
+                guessTextBox_3.Focus();
+            }
+        }
+        private void guessTextBox_3_TextChanged(object sender, EventArgs e)
+        {
+            if (guessTextBox_3.Text.Length == 1 && char.IsDigit(guessTextBox_3.Text[0]))
+            {
+                guessTextBox_4.Focus();
+            }
+        }
+        private void guessTextBox_4_TextChanged(object sender, EventArgs e)
+        {
+            if (guessTextBox_4.Text.Length == 1 && char.IsDigit(guessTextBox_4.Text[0]))
+            {
+                SubmitGuessButton.Focus();
+            }
+        }
+
+        // Timer Logic
+        private void TimerButton_Click(object sender, EventArgs e)
+        {
+            if (!TimerButton.Visible)
+            {
+                return;
+            }
+
+            if (timerPaused)
+            {
+                // Resume the timer
+                CodeMakerTimer.Start();
+                timerPaused = false;
+                TimerButton.Text = "Pause";
+                pauseToolStripMenuItem.Text = "Pause";
+                pauseToolStripMenuItem1.Text = "Pause";
+                guessTextBox_1.Enabled = true;
+                guessTextBox_2.Enabled = true;
+                guessTextBox_3.Enabled = true;
+                guessTextBox_4.Enabled = true;
+            }
+            else
+            {
+                // Pause the timer
+                CodeMakerTimer.Stop();
+                timerPaused = true;
+                TimerButton.Text = "Play";
+                pauseToolStripMenuItem.Text = "Play";
+                pauseToolStripMenuItem1.Text = "Play";
+                guessTextBox_1.Enabled = false;
+                guessTextBox_2.Enabled = false;
+                guessTextBox_3.Enabled = false;
+                guessTextBox_4.Enabled = false;
+            }
+        }
+
+        private void CodeMakerTimer_Tick(object sender, EventArgs e)
+        {
+            elapsedSeconds++;
+            int minutes = elapsedSeconds / 60;
+            int seconds = elapsedSeconds % 60;
+            TimerLabel.Text = $"Timer: {minutes:D2}:{seconds:D2}";
+        }
+
+
+
+
+
+        // UI Logic
         public class CustomMenuRenderer : ToolStripProfessionalRenderer
         {
             protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
@@ -143,227 +367,15 @@ namespace AB_game
                 isDragging = false;
             }
         }
-
-        private void Win_Conditions(int GuessNumber)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            int Score = 10 * (10 - GuessNumber + 1) - (elapsedSeconds / 10);
-
-            TimerButton.Visible = false;
-            CodeMakerTimer.Stop();
-
-            SecretLabel_1.Text = codeMakerGame.SecretNumber[0].ToString();
-            SecretLabel_2.Text = codeMakerGame.SecretNumber[1].ToString();
-            SecretLabel_3.Text = codeMakerGame.SecretNumber[2].ToString();
-            SecretLabel_4.Text = codeMakerGame.SecretNumber[3].ToString();
-
-            guessTextBox_1.Enabled = false;
-            guessTextBox_2.Enabled = false;
-            guessTextBox_3.Enabled = false;
-            guessTextBox_4.Enabled = false;
-
-            winLabel.Visible = true;
-            winLabel.Text = $"Congratulations! Score: {Score}";
+            base.OnFormClosing(e);
+            WelcomeForm welcomeForm = new WelcomeForm();
+            welcomeForm.Show();
         }
-        private void SubmitGuessButton_Click(object sender, EventArgs e)
+        private void ExitButton_Click(object sender, EventArgs e)
         {
-            // Check if all guess text boxes are filled with valid numbers
-            if (IsValidGuess())
-            {
-                if (!CodeMakerTimer.Enabled)
-                {
-                    CodeMakerTimer.Start();
-                    TimerButton.Visible = true;
-                }
-
-                string guess = guessTextBox_1.Text + guessTextBox_2.Text + guessTextBox_3.Text + guessTextBox_4.Text;
-                string result = codeMakerGame.EvaluateGuess(guess);
-
-                // Get the current guess number
-                int guessNumber = dataGridView1.Rows.Count;
-
-                // Create a new row with the guess number, guess, and hint
-                dataGridView1.Rows.Add(guessNumber, guess, $"{result[0]}A{result[1]}B");
-
-                if (result[0] == '4')
-                {
-                    Win_Conditions(guessNumber);
-                }
-
-                // Clear the guess text boxes
-                guessTextBox_1.Clear();
-                guessTextBox_2.Clear();
-                guessTextBox_3.Clear();
-                guessTextBox_4.Clear();
-
-                // Set focus to the first guess text box for the next guess
-                guessTextBox_1.Focus();
-            }
-            else
-            {
-                MessageBox.Show("Please enter a valid guess (numbers 0-9) in all text boxes.", "Invalid Guess", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private bool IsValidGuess()
-        {
-            return !string.IsNullOrEmpty(guessTextBox_1.Text) &&
-                   guessTextBox_1.Text.Length == 1 &&
-                   char.IsDigit(guessTextBox_1.Text[0]) &&
-                   !string.IsNullOrEmpty(guessTextBox_2.Text) &&
-                   guessTextBox_2.Text.Length == 1 &&
-                   char.IsDigit(guessTextBox_2.Text[0]) &&
-                   !string.IsNullOrEmpty(guessTextBox_3.Text) &&
-                   guessTextBox_3.Text.Length == 1 &&
-                   char.IsDigit(guessTextBox_3.Text[0]) &&
-                   !string.IsNullOrEmpty(guessTextBox_4.Text) &&
-                   guessTextBox_4.Text.Length == 1 &&
-                   char.IsDigit(guessTextBox_4.Text[0]);
-        }
-
-        private void RevealButton_Click(object sender, EventArgs e)
-        {
-            if (codeMakerGame.SecretNumber != null)
-            {
-                char[] secretDigits = codeMakerGame.SecretNumber.ToCharArray();
-                SecretLabel_1.Text = secretDigits[0].ToString();
-                SecretLabel_2.Text = secretDigits[1].ToString();
-                SecretLabel_3.Text = secretDigits[2].ToString();
-                SecretLabel_4.Text = secretDigits[3].ToString();
-
-                guessTextBox_1.Enabled = false;
-                guessTextBox_2.Enabled = false;
-                guessTextBox_3.Enabled = false;
-                guessTextBox_4.Enabled = false;
-
-                CodeMakerTimer.Stop();
-                timerPaused = true;
-                TimerButton.Text = "Play";
-                TimerButton.Visible = false;
-            }
-        }
-
-        private void NewGameButton_Click(object sender, EventArgs e)
-        {
-            codeMakerGame.GenerateSecretNumber();
-
-            // Clear the secret labels
-            SecretLabel_1.Text = "?";
-            SecretLabel_2.Text = "?";
-            SecretLabel_3.Text = "?";
-            SecretLabel_4.Text = "?";
-
-            guessTextBox_1.Enabled = true;
-            guessTextBox_2.Enabled = true;
-            guessTextBox_3.Enabled = true;
-            guessTextBox_4.Enabled = true;
-
-            CodeMakerTimer.Stop();
-            timerPaused = false;
-            TimerButton.Text = "Pause";
-            TimerButton.Visible = false;
-            elapsedSeconds = 0;
-            TimerLabel.Text = "Timer: 00:00";
-
-            winLabel.Visible = false;
-            dataGridView1.Rows.Clear();
-        }
-
-        private void TimerButton_Click(object sender, EventArgs e)
-        {
-            if (!TimerButton.Visible)
-            {
-                return;
-            }
-
-            if (timerPaused)
-            {
-                // Resume the timer
-                CodeMakerTimer.Start();
-                timerPaused = false;
-                TimerButton.Text = "Pause";
-                pauseToolStripMenuItem.Text = "Pause";
-                pauseToolStripMenuItem1.Text = "Pause";
-                guessTextBox_1.Enabled = true;
-                guessTextBox_2.Enabled = true;
-                guessTextBox_3.Enabled = true;
-                guessTextBox_4.Enabled = true;
-            }
-            else
-            {
-                // Pause the timer
-                CodeMakerTimer.Stop();
-                timerPaused = true;
-                TimerButton.Text = "Play";
-                pauseToolStripMenuItem.Text = "Play";
-                pauseToolStripMenuItem1.Text = "Play";
-                guessTextBox_1.Enabled = false;
-                guessTextBox_2.Enabled = false;
-                guessTextBox_3.Enabled = false;
-                guessTextBox_4.Enabled = false;
-            }
-        }
-
-        private void CodeMakerTimer_Tick(object sender, EventArgs e)
-        {
-            elapsedSeconds++;
-            int minutes = elapsedSeconds / 60;
-            int seconds = elapsedSeconds % 60;
-            TimerLabel.Text = $"Timer: {minutes:D2}:{seconds:D2}";
-        }
-
-        private void guessTextBox_1_TextChanged(object sender, EventArgs e)
-        {
-            if (guessTextBox_1.Text.Length == 1 && char.IsDigit(guessTextBox_1.Text[0]))
-            {
-                guessTextBox_2.Focus();
-            }
-        }
-        private void guessTextBox_2_TextChanged(object sender, EventArgs e)
-        {
-            if (guessTextBox_2.Text.Length == 1 && char.IsDigit(guessTextBox_2.Text[0]))
-            {
-                guessTextBox_3.Focus();
-            }
-        }
-        private void guessTextBox_3_TextChanged(object sender, EventArgs e)
-        {
-            if (guessTextBox_3.Text.Length == 1 && char.IsDigit(guessTextBox_3.Text[0]))
-            {
-                guessTextBox_4.Focus();
-            }
-        }
-        private void guessTextBox_4_TextChanged(object sender, EventArgs e)
-        {
-            if (guessTextBox_4.Text.Length == 1 && char.IsDigit(guessTextBox_4.Text[0]))
-            {
-                SubmitGuessButton.Focus();
-            }
-        }
-        private void GuessTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            TextBox? currentTextBox = sender as TextBox;
-            if (e.KeyCode == Keys.Back && currentTextBox != null && currentTextBox.Text.Length == 0)
-            {
-                // Decide which TextBox to focus based on the sender
-                TextBox? previousTextBox = null;
-                if (currentTextBox == guessTextBox_2) previousTextBox = guessTextBox_1;
-                else if (currentTextBox == guessTextBox_3) previousTextBox = guessTextBox_2;
-                else if (currentTextBox == guessTextBox_4) previousTextBox = guessTextBox_3;
-
-                if (previousTextBox != null)
-                {
-                    previousTextBox.Focus();
-                    previousTextBox.Text = ""; // Move the cursor to the end of the text
-                }
-            }
-        }
-        private void SubmitGuessButton_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Back)
-            {
-                guessTextBox_4.Focus();
-                guessTextBox_4.Text = "";
-            }
+            this.Close();
         }
 
         private void revealToolStripMenuItem_Click(object sender, EventArgs e)
@@ -389,17 +401,6 @@ namespace AB_game
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ExitButton_Click(sender, e);
-        }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            WelcomeForm welcomeForm = new WelcomeForm();
-            welcomeForm.Show();
-        }
-        private void ExitButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void pauseToolStripMenuItem1_Click(object sender, EventArgs e)

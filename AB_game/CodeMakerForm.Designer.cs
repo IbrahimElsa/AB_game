@@ -550,10 +550,9 @@
             // 
             // winLabel
             // 
-            winLabel.Anchor = AnchorStyles.Bottom;
             winLabel.AutoSize = true;
             winLabel.Font = new Font("Segoe UI", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            winLabel.Location = new Point(82, 0);
+            winLabel.Location = new Point(306, 0);
             winLabel.Name = "winLabel";
             winLabel.Size = new Size(0, 47);
             winLabel.TabIndex = 0;

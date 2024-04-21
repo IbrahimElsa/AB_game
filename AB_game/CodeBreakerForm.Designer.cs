@@ -66,12 +66,15 @@
             newGameToolStripMenuItem1 = new ToolStripMenuItem();
             exitToolStripMenuItem1 = new ToolStripMenuItem();
             CodeBreakerTimer = new System.Windows.Forms.Timer(components);
+            panel2 = new Panel();
+            winLabel = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ExitPanel.SuspendLayout();
             menuStrip1.SuspendLayout();
             NamePanel.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -132,7 +135,7 @@
             newGameBtn.Font = new Font("Segoe UI", 24F);
             newGameBtn.ForeColor = Color.LightGray;
             newGameBtn.ImageAlign = ContentAlignment.TopCenter;
-            newGameBtn.Location = new Point(177, 631);
+            newGameBtn.Location = new Point(183, 544);
             newGameBtn.Name = "newGameBtn";
             newGameBtn.Size = new Size(204, 56);
             newGameBtn.TabIndex = 41;
@@ -146,7 +149,7 @@
             hintTextBox_1.BorderStyle = BorderStyle.FixedSingle;
             hintTextBox_1.Font = new Font("Segoe UI", 60F);
             hintTextBox_1.ForeColor = Color.White;
-            hintTextBox_1.Location = new Point(195, 185);
+            hintTextBox_1.Location = new Point(195, 166);
             hintTextBox_1.MaxLength = 1;
             hintTextBox_1.Name = "hintTextBox_1";
             hintTextBox_1.Size = new Size(81, 114);
@@ -161,7 +164,7 @@
             hintTextBox_2.BorderStyle = BorderStyle.FixedSingle;
             hintTextBox_2.Font = new Font("Segoe UI", 60F);
             hintTextBox_2.ForeColor = Color.White;
-            hintTextBox_2.Location = new Point(289, 185);
+            hintTextBox_2.Location = new Point(289, 166);
             hintTextBox_2.MaxLength = 1;
             hintTextBox_2.Name = "hintTextBox_2";
             hintTextBox_2.Size = new Size(81, 114);
@@ -177,7 +180,7 @@
             SubmitHintButton.Font = new Font("Segoe UI", 24F);
             SubmitHintButton.ForeColor = Color.LightGray;
             SubmitHintButton.ImageAlign = ContentAlignment.TopCenter;
-            SubmitHintButton.Location = new Point(195, 314);
+            SubmitHintButton.Location = new Point(195, 295);
             SubmitHintButton.Name = "SubmitHintButton";
             SubmitHintButton.Size = new Size(175, 56);
             SubmitHintButton.TabIndex = 29;
@@ -190,7 +193,7 @@
             // 
             label_hint.AutoSize = true;
             label_hint.Font = new Font("Segoe UI", 26F);
-            label_hint.Location = new Point(195, 135);
+            label_hint.Location = new Point(195, 116);
             label_hint.Name = "label_hint";
             label_hint.Size = new Size(175, 47);
             label_hint.TabIndex = 33;
@@ -268,7 +271,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 26F);
-            label2.Location = new Point(179, 415);
+            label2.Location = new Point(185, 358);
             label2.Name = "label2";
             label2.Size = new Size(191, 47);
             label2.TabIndex = 36;
@@ -279,7 +282,7 @@
             GuessLabel_1.AutoSize = true;
             GuessLabel_1.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_1.Font = new Font("Segoe UI", 60F);
-            GuessLabel_1.Location = new Point(96, 492);
+            GuessLabel_1.Location = new Point(102, 405);
             GuessLabel_1.Name = "GuessLabel_1";
             GuessLabel_1.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_1.Size = new Size(87, 122);
@@ -292,7 +295,7 @@
             GuessLabel_2.AutoSize = true;
             GuessLabel_2.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_2.Font = new Font("Segoe UI", 60F);
-            GuessLabel_2.Location = new Point(189, 492);
+            GuessLabel_2.Location = new Point(195, 405);
             GuessLabel_2.Name = "GuessLabel_2";
             GuessLabel_2.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_2.Size = new Size(87, 122);
@@ -305,7 +308,7 @@
             GuessLabel_3.AutoSize = true;
             GuessLabel_3.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_3.Font = new Font("Segoe UI", 60F);
-            GuessLabel_3.Location = new Point(282, 492);
+            GuessLabel_3.Location = new Point(288, 405);
             GuessLabel_3.Name = "GuessLabel_3";
             GuessLabel_3.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_3.Size = new Size(87, 122);
@@ -318,7 +321,7 @@
             GuessLabel_4.AutoSize = true;
             GuessLabel_4.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_4.Font = new Font("Segoe UI", 60F);
-            GuessLabel_4.Location = new Point(375, 492);
+            GuessLabel_4.Location = new Point(381, 405);
             GuessLabel_4.Name = "GuessLabel_4";
             GuessLabel_4.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_4.Size = new Size(87, 122);
@@ -469,6 +472,24 @@
             CodeBreakerTimer.Interval = 1000;
             CodeBreakerTimer.Tick += CodeBreakerTimer_Tick;
             // 
+            // panel2
+            // 
+            panel2.Controls.Add(winLabel);
+            panel2.Dock = DockStyle.Bottom;
+            panel2.Location = new Point(0, 644);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1100, 56);
+            panel2.TabIndex = 42;
+            // 
+            // winLabel
+            // 
+            winLabel.AutoSize = true;
+            winLabel.Font = new Font("Segoe UI", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            winLabel.Location = new Point(306, 0);
+            winLabel.Name = "winLabel";
+            winLabel.Size = new Size(0, 47);
+            winLabel.TabIndex = 0;
+            // 
             // CodeBreakerForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -476,6 +497,7 @@
             BackColor = Color.FromArgb(46, 51, 73);
             ClientSize = new Size(1100, 700);
             ContextMenuStrip = contextMenuStrip1;
+            Controls.Add(panel2);
             Controls.Add(newGameBtn);
             Controls.Add(ExitPanel);
             Controls.Add(GuessLabel_4);
@@ -504,6 +526,8 @@
             NamePanel.ResumeLayout(false);
             NamePanel.PerformLayout();
             contextMenuStrip1.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -544,5 +568,7 @@
         private Button TimerButton;
         private ToolStripMenuItem pauseStripMenuItem1;
         private ToolStripMenuItem pauseToolStripMenuItem;
+        private Panel panel2;
+        private Label winLabel;
     }
 }

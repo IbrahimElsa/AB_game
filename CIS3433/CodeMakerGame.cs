@@ -18,6 +18,8 @@ namespace CIS3433
             var random = new Random();
             var digits = Enumerable.Range(0, 10).OrderBy(x => random.Next()).Take(4).ToArray();
             SecretNumber = string.Join("", digits);
+
+            //SecretNumber = "1234";
         }
 
         public string EvaluateGuess(string guess)
