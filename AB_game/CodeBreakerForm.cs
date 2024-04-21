@@ -164,25 +164,21 @@ namespace AB_game
 
             if (!int.TryParse(hintTextBox_1.Text, out bulls))
             {
-                // Handle invalid input for bulls
-                MessageBox.Show("Please enter a valid number for bulls.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (!int.TryParse(hintTextBox_2.Text, out cows))
             {
-                // Handle invalid input for cows
-                MessageBox.Show("Please enter a valid number for cows.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            string nextGuess = codeBreakerGame.MakeGuess(bulls, cows);
 
             string currentGuess = GuessLabel_1.Text + GuessLabel_2.Text + GuessLabel_3.Text + GuessLabel_4.Text;
 
             // Add the current guess and hint to the DataGridView
             string hint = $"{bulls}A{cows}B";
             AddGuessToDataGridView(currentGuess, hint);
-
-            string nextGuess = codeBreakerGame.MakeGuess(bulls, cows);
             PopulateGuessLabels(nextGuess);
 
             // Clear the input fields
