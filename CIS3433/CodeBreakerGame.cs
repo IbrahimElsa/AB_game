@@ -8,6 +8,7 @@ namespace CIS3433
     {
         private readonly List<string> possibleGuesses;
         private readonly Dictionary<string, int> guessScores;
+
         public List<string> Guesses { get; private set; }
         public int TotalTries { get; private set; }
 
@@ -16,7 +17,11 @@ namespace CIS3433
             Guesses = new List<string>();
             TotalTries = 0;
             possibleGuesses = GeneratePossibleGuesses();
-            guessScores = possibleGuesses.ToDictionary(guess => guess, _ => 0);
+            guessScores = new Dictionary<string, int>(possibleGuesses.Count);
+            foreach (var guess in possibleGuesses)
+            {
+                guessScores[guess] = 0;
+            }
         }
 
         private List<string> GeneratePossibleGuesses()
@@ -29,8 +34,7 @@ namespace CIS3433
 
         public string GenerateInitialGuess()
         {
-            var random = new Random();
-            string initialGuess = possibleGuesses[random.Next(possibleGuesses.Count)];
+            string initialGuess = possibleGuesses[new Random().Next(possibleGuesses.Count)];
             Guesses.Add(initialGuess);
             TotalTries++;
             return initialGuess;
@@ -40,17 +44,14 @@ namespace CIS3433
         {
             UpdateGuessScores(bulls, cows);
             RemoveInvalidGuesses(bulls, cows);
-
             string bestGuess = possibleGuesses
                 .OrderByDescending(guess => guessScores[guess])
                 .FirstOrDefault(guess => guess.Distinct().Count() == 4) ?? string.Empty;
-
             if (!string.IsNullOrEmpty(bestGuess))
             {
                 Guesses.Add(bestGuess);
                 TotalTries++;
             }
-
             return bestGuess;
         }
 
@@ -79,14 +80,30 @@ namespace CIS3433
 
         private int CountBulls(string guess, string secretNumber)
         {
-            secretNumber ??= string.Empty;
-            return guess.Zip(secretNumber, (g, s) => g == s).Count(x => x);
+            if (string.IsNullOrEmpty(secretNumber))
+                return 0;
+
+            int count = 0;
+            for (int i = 0; i < guess.Length; i++)
+            {
+                if (guess[i] == secretNumber[i])
+                    count++;
+            }
+            return count;
         }
 
         private int CountCows(string guess, string secretNumber)
         {
-            secretNumber ??= string.Empty;
-            return guess.Count(digit => secretNumber.Contains(digit)) - CountBulls(guess, secretNumber);
+            if (string.IsNullOrEmpty(secretNumber))
+                return 0;
+
+            int count = 0;
+            foreach (char digit in guess)
+            {
+                if (secretNumber.Contains(digit))
+                    count++;
+            }
+            return count - CountBulls(guess, secretNumber);
         }
     }
 }
