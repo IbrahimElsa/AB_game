@@ -24,6 +24,11 @@ namespace CIS3433
 
         public string EvaluateGuess(string guess)
         {
+            if (SecretNumber == null)
+            {
+                return string.Empty;
+            }
+
             int bulls = 0;
             int cows = 0;
             var secretNumberCounts = new Dictionary<char, int>();
