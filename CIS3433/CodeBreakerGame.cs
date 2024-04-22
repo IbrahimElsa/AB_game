@@ -10,12 +10,10 @@ namespace CIS3433
         private readonly Dictionary<string, int> guessScores;
 
         public List<string> Guesses { get; private set; }
-        public int TotalTries { get; private set; }
 
         public CodeBreakerGame()
         {
             Guesses = new List<string>();
-            TotalTries = 0;
             possibleGuesses = GeneratePossibleGuesses();
             guessScores = new Dictionary<string, int>(possibleGuesses.Count);
             foreach (var guess in possibleGuesses)
@@ -36,23 +34,37 @@ namespace CIS3433
         {
             string initialGuess = possibleGuesses[new Random().Next(possibleGuesses.Count)];
             Guesses.Add(initialGuess);
-            TotalTries++;
             return initialGuess;
         }
 
-        public string MakeGuess(int bulls, int cows)
+        public (string finalGuess, bool isGameFinished) MakeGuess(int bulls, int cows)
         {
             UpdateGuessScores(bulls, cows);
             RemoveInvalidGuesses(bulls, cows);
+
+            // If there's only one possible guess remaining, return it and indicate the game is finished
+            if (possibleGuesses.Count == 1)
+            {
+                string finalGuess = possibleGuesses[0];
+                Guesses.Add(finalGuess);
+                return (finalGuess, true);
+            }
+
+            // Otherwise, continue with the current strategy to choose the best guess
             string bestGuess = possibleGuesses
                 .OrderByDescending(guess => guessScores[guess])
                 .FirstOrDefault(guess => guess.Distinct().Count() == 4) ?? string.Empty;
+
             if (!string.IsNullOrEmpty(bestGuess))
             {
                 Guesses.Add(bestGuess);
-                TotalTries++;
             }
-            return bestGuess;
+
+            // Check if the game is finished (i.e., there's only one possible guess left)
+            bool isGameFinished = possibleGuesses.Count == 1;
+
+            // Return whether the game is finished
+            return (bestGuess, isGameFinished);
         }
 
         private void UpdateGuessScores(int bulls, int cows)

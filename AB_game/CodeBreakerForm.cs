@@ -12,6 +12,7 @@ namespace AB_game
         private bool timerPaused;
         private int elapsedSeconds;
         private string groupValue;
+        private int numberOfGuesses;
         private bool isDragging;
         private Point lastCursor;
         private Point lastForm;
@@ -33,6 +34,7 @@ namespace AB_game
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
 
             codeBreakerGame = new CodeBreakerGame();
+            numberOfGuesses = 0;
 
             this.groupValue = groupValue;
             GroupLabel.Text += " vs. Group " + groupValue;
@@ -75,6 +77,19 @@ namespace AB_game
             GuessLabel_3.Text = guess[2].ToString();
             GuessLabel_4.Text = guess[3].ToString();
         }
+        private void Win_Conditions(int numberOfGuesses)
+        {
+            int Score = 10 * (10 - numberOfGuesses + 1) - (elapsedSeconds / 10);
+
+            TimerButton.Visible = false;
+            CodeBreakerTimer.Stop();
+
+            hintTextBox_1.Enabled = false;
+            hintTextBox_2.Enabled = false;
+
+            winLabel.Visible = true;
+            winLabel.Text = $"Congratulations! Score: {Score} - {numberOfGuesses}";
+        }
 
         private void SubmitHintButton_Click(object sender, EventArgs e)
         {
@@ -89,13 +104,15 @@ namespace AB_game
             {
                 return;
             }
+
             if (!CodeBreakerTimer.Enabled)
             {
                 CodeBreakerTimer.Start();
                 TimerButton.Visible = true;
             }
 
-            string nextGuess = codeBreakerGame.MakeGuess(bulls, cows);
+            // Make guess and check if the game is finished
+            (string nextGuess, bool isGameFinished) = codeBreakerGame.MakeGuess(bulls, cows);
 
             string currentGuess = GuessLabel_1.Text + GuessLabel_2.Text + GuessLabel_3.Text + GuessLabel_4.Text;
 
@@ -103,6 +120,15 @@ namespace AB_game
             string hint = $"{bulls}A{cows}B";
             AddGuessToDataGridView(currentGuess, hint);
             PopulateGuessLabels(nextGuess);
+            numberOfGuesses++;
+
+            // If the game is finished, do something
+            if (isGameFinished)
+            {
+                // Do something when the game is finished, such as displaying a message or updating UI
+                Win_Conditions(numberOfGuesses);
+
+            }
 
             // Clear the input fields
             hintTextBox_1.Text = string.Empty;
@@ -110,6 +136,8 @@ namespace AB_game
 
             hintTextBox_1.Focus();
         }
+
+
 
         private void AddGuessToDataGridView(string guess, string hint)
         {
@@ -121,6 +149,19 @@ namespace AB_game
         {
             hintTextBox_1.Text = "";
             hintTextBox_2.Text = "";
+
+            hintTextBox_1.Enabled = true;
+            hintTextBox_2.Enabled = true;
+
+            CodeBreakerTimer.Stop();
+            timerPaused = false;
+            TimerButton.Text = "Pause";
+            TimerButton.Visible = false;
+            elapsedSeconds = 0;
+            TimerLabel.Text = "Timer: 00:00";
+            numberOfGuesses = 0;
+
+            winLabel.Visible = false;
 
             dataGridView1.Rows.Clear();
 
