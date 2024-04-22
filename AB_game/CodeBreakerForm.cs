@@ -88,31 +88,39 @@ namespace AB_game
             hintTextBox_2.Enabled = false;
 
             winLabel.Visible = true;
-            winLabel.Text = $"Congratulations! Score: {Score} - {numberOfGuesses}";
+            winLabel.Text = $"Congratulations! Score: {Score}";
         }
 
-        private void SubmitHintButton_Click(object sender, EventArgs e)
+        private async void SubmitHintButton_Click(object sender, EventArgs e)
         {
             int bulls, cows;
 
-            if (!int.TryParse(hintTextBox_1.Text, out bulls))
+            if (!int.TryParse(hintTextBox_1.Text, out bulls) || bulls < 0 || bulls > 4)
             {
+                hintTextBox_1.Text = string.Empty;
+                hintTextBox_1.Focus();
                 return;
             }
 
-            if (!int.TryParse(hintTextBox_2.Text, out cows))
+            if (!int.TryParse(hintTextBox_2.Text, out cows) || cows < 0 || cows > 4)
             {
+                hintTextBox_2.Text = string.Empty;
+                hintTextBox_2.Focus();
                 return;
             }
 
+            // Start the timer if it's not already running
             if (!CodeBreakerTimer.Enabled)
             {
                 CodeBreakerTimer.Start();
                 TimerButton.Visible = true;
             }
 
-            // Make guess and check if the game is finished
-            (string nextGuess, bool isGameFinished) = codeBreakerGame.MakeGuess(bulls, cows);
+            // Make guess asynchronously and check if the game is finished
+            var result = await Task.Run(() => codeBreakerGame.MakeGuess(bulls, cows));
+
+            string nextGuess = result.Item1;
+            bool isGameFinished = result.Item2;
 
             string currentGuess = GuessLabel_1.Text + GuessLabel_2.Text + GuessLabel_3.Text + GuessLabel_4.Text;
 
@@ -127,7 +135,6 @@ namespace AB_game
             {
                 // Do something when the game is finished, such as displaying a message or updating UI
                 Win_Conditions(numberOfGuesses);
-
             }
 
             // Clear the input fields
@@ -136,6 +143,8 @@ namespace AB_game
 
             hintTextBox_1.Focus();
         }
+
+
 
 
 

@@ -76,10 +76,20 @@ namespace AB_game
             TimerButton.Visible = false;
             CodeMakerTimer.Stop();
 
-            SecretLabel_1.Text = codeMakerGame.SecretNumber[0].ToString();
-            SecretLabel_2.Text = codeMakerGame.SecretNumber[1].ToString();
-            SecretLabel_3.Text = codeMakerGame.SecretNumber[2].ToString();
-            SecretLabel_4.Text = codeMakerGame.SecretNumber[3].ToString();
+            if (codeMakerGame.SecretNumber != null && codeMakerGame.SecretNumber.Length >= 4)
+            {
+                SecretLabel_1.Text = codeMakerGame.SecretNumber[0].ToString();
+                SecretLabel_2.Text = codeMakerGame.SecretNumber[1].ToString();
+                SecretLabel_3.Text = codeMakerGame.SecretNumber[2].ToString();
+                SecretLabel_4.Text = codeMakerGame.SecretNumber[3].ToString();
+            }
+            else
+            {
+                SecretLabel_1.Text = "?";
+                SecretLabel_2.Text = "?";
+                SecretLabel_3.Text = "?";
+                SecretLabel_4.Text = "?";
+            }
 
             guessTextBox_1.Enabled = false;
             guessTextBox_2.Enabled = false;
@@ -89,6 +99,7 @@ namespace AB_game
             winLabel.Visible = true;
             winLabel.Text = $"Congratulations! Score: {Score}";
         }
+
         private void SubmitGuessButton_Click(object sender, EventArgs e)
         {
             // Check if all guess text boxes are filled with valid numbers
