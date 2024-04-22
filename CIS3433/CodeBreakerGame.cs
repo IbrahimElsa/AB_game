@@ -33,6 +33,7 @@ namespace CIS3433
         public string GenerateInitialGuess()
         {
             string initialGuess = possibleGuesses[new Random().Next(possibleGuesses.Count)];
+            //string initialGuess = "0123";
             Guesses.Add(initialGuess);
             return initialGuess;
         }

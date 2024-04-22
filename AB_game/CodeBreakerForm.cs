@@ -43,7 +43,7 @@ namespace AB_game
 
             codeBreakerGame.GenerateInitialGuess();
 
-            menuStrip1.BackColor = Color.FromArgb(72, 77, 99);
+            menuStrip1.BackColor = Color.FromArgb(36, 42, 59);
             menuStrip1.ForeColor = Color.White;
             menuStrip1.Font = new Font("Segoe UI", 12, FontStyle.Bold);
 
@@ -265,11 +265,11 @@ namespace AB_game
             {
                 if (e.Item.Selected)
                 {
-                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(86, 92, 118)), e.Item.ContentRectangle);
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(43, 50, 70)), e.Item.ContentRectangle);
                 }
                 else
                 {
-                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(72, 77, 99)), e.Item.ContentRectangle);
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(36, 42, 59)), e.Item.ContentRectangle);
                 }
             }
 

@@ -135,7 +135,7 @@
             newGameBtn.Font = new Font("Segoe UI", 24F);
             newGameBtn.ForeColor = Color.LightGray;
             newGameBtn.ImageAlign = ContentAlignment.TopCenter;
-            newGameBtn.Location = new Point(183, 544);
+            newGameBtn.Location = new Point(183, 553);
             newGameBtn.Name = "newGameBtn";
             newGameBtn.Size = new Size(204, 56);
             newGameBtn.TabIndex = 41;
@@ -282,7 +282,7 @@
             GuessLabel_1.AutoSize = true;
             GuessLabel_1.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_1.Font = new Font("Segoe UI", 60F);
-            GuessLabel_1.Location = new Point(102, 405);
+            GuessLabel_1.Location = new Point(103, 414);
             GuessLabel_1.Name = "GuessLabel_1";
             GuessLabel_1.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_1.Size = new Size(87, 122);
@@ -295,7 +295,7 @@
             GuessLabel_2.AutoSize = true;
             GuessLabel_2.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_2.Font = new Font("Segoe UI", 60F);
-            GuessLabel_2.Location = new Point(195, 405);
+            GuessLabel_2.Location = new Point(196, 414);
             GuessLabel_2.Name = "GuessLabel_2";
             GuessLabel_2.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_2.Size = new Size(87, 122);
@@ -308,7 +308,7 @@
             GuessLabel_3.AutoSize = true;
             GuessLabel_3.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_3.Font = new Font("Segoe UI", 60F);
-            GuessLabel_3.Location = new Point(288, 405);
+            GuessLabel_3.Location = new Point(289, 414);
             GuessLabel_3.Name = "GuessLabel_3";
             GuessLabel_3.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_3.Size = new Size(87, 122);
@@ -321,7 +321,7 @@
             GuessLabel_4.AutoSize = true;
             GuessLabel_4.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_4.Font = new Font("Segoe UI", 60F);
-            GuessLabel_4.Location = new Point(381, 405);
+            GuessLabel_4.Location = new Point(382, 414);
             GuessLabel_4.Name = "GuessLabel_4";
             GuessLabel_4.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_4.Size = new Size(87, 122);
@@ -331,7 +331,7 @@
             // 
             // ExitPanel
             // 
-            ExitPanel.BackColor = Color.FromArgb(72, 77, 99);
+            ExitPanel.BackColor = Color.FromArgb(36, 42, 59);
             ExitPanel.Controls.Add(menuStrip1);
             ExitPanel.Controls.Add(NamePanel);
             ExitPanel.Controls.Add(ExitButton);

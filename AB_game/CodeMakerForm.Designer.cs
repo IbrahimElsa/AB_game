@@ -230,7 +230,7 @@
             // 
             // ExitPanel
             // 
-            ExitPanel.BackColor = Color.FromArgb(72, 77, 99);
+            ExitPanel.BackColor = Color.FromArgb(36, 42, 59);
             ExitPanel.Controls.Add(NamePanel);
             ExitPanel.Controls.Add(ExitButton);
             ExitPanel.Controls.Add(menuStrip1);
@@ -392,7 +392,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.EnableHeadersVisualStyles = false;
-            dataGridView1.GridColor = Color.FromArgb(46, 51, 73);
+            dataGridView1.GridColor = Color.FromArgb(64, 70, 86);
             dataGridView1.Location = new Point(564, 130);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
