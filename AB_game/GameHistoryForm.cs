@@ -40,7 +40,14 @@ namespace AB_game
             databaseConnection = new DatabaseConnection();
 
             this.groupValue = groupValue;
-            GroupLabel.Text += " vs. Group " + groupValue;
+            if(groupValue != "")
+            {
+                GroupLabel.Text += " vs. Group " + groupValue;
+            }
+            else
+            {
+                GroupLabel.Text = "Group 11 Game History";
+            }
             this.gameMode = gameMode;
 
             menuStrip1.BackColor = Color.FromArgb(36, 42, 59);

@@ -12,23 +12,22 @@ namespace CIS3433
     {
         private string ConnectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\AB_Game_Database.mdf;Integrated Security=True;";
 
-        public void UpdateTable(string playerName, string playingMode, DateTime gameDate, TimeSpan gameTime, int totalTries, int totalSeconds, string secretNumber, decimal gameScore, string guessDetails)
+        public void UpdateTable(string groupName, string gameMode, DateTime date, TimeSpan time, int totalTries, int totalSeconds, string secretNumber, int gameScore, string guessDetails)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
-
-                    string query = "INSERT INTO GamePlay (PlayerName, PlayingMode, GameDate, GameTime, TotalTries, TotalSeconds, SecretNumber, GameScore, GuessDetails) " +
-                                   "VALUES (@PlayerName, @PlayingMode, @GameDate, @GameTime, @TotalTries, @TotalSeconds, @SecretNumber, @GameScore, @GuessDetails)";
+                    string query = "INSERT INTO GamePlay (GroupName, GameMode, Date, Time, TotalTries, TotalSeconds, SecretNumber, GameScore, GuessDetails) " +
+                        "VALUES (@GroupName, @GameMode, @Date, @Time, @TotalTries, @TotalSeconds, @SecretNumber, @GameScore, @GuessDetails)";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@PlayerName", playerName);
-                        command.Parameters.AddWithValue("@PlayingMode", playingMode);
-                        command.Parameters.AddWithValue("@GameDate", gameDate);
-                        command.Parameters.AddWithValue("@GameTime", gameTime);
+                        command.Parameters.AddWithValue("@GroupName", groupName);
+                        command.Parameters.AddWithValue("@GameMode", gameMode);
+                        command.Parameters.AddWithValue("@Date", date);
+                        command.Parameters.AddWithValue("@Time", time);
                         command.Parameters.AddWithValue("@TotalTries", totalTries);
                         command.Parameters.AddWithValue("@TotalSeconds", totalSeconds);
                         command.Parameters.AddWithValue("@SecretNumber", secretNumber);
@@ -38,7 +37,6 @@ namespace CIS3433
                         command.ExecuteNonQuery();
                     }
                 }
-
                 Console.WriteLine("Data inserted successfully.");
             }
             catch (Exception ex)
@@ -50,13 +48,11 @@ namespace CIS3433
         public DataTable GetGamePlayData()
         {
             DataTable dataTable = new DataTable();
-
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
-
                     string query = "SELECT * FROM GamePlay";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -72,7 +68,6 @@ namespace CIS3433
             {
                 throw new Exception("Error retrieving data from GamePlay table: " + ex.Message);
             }
-
             return dataTable;
         }
     }
