@@ -73,6 +73,7 @@
             label3 = new Label();
             CodeMakerTimer = new System.Windows.Forms.Timer(components);
             panel2 = new Panel();
+            GameSummaryButton = new Button();
             winLabel = new Label();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -370,7 +371,8 @@
             // dataGridView1
             // 
             dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridView1.BackgroundColor = Color.FromArgb(46, 51, 73);
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
@@ -395,7 +397,7 @@
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.FromArgb(64, 70, 86);
-            dataGridView1.Location = new Point(592, 130);
+            dataGridView1.Location = new Point(553, 130);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -408,21 +410,23 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.RowHeadersVisible = false;
-            dataGridView1.RowHeadersWidth = 62;
+            dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             dataGridView1.RowTemplate.Height = 70;
-            dataGridView1.Size = new Size(473, 508);
+            dataGridView1.ScrollBars = ScrollBars.Vertical;
+            dataGridView1.Size = new Size(512, 508);
             dataGridView1.TabIndex = 24;
             // 
             // GuessNumber
             // 
+            GuessNumber.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             GuessNumber.HeaderText = "#";
-            GuessNumber.MinimumWidth = 125;
+            GuessNumber.MinimumWidth = 100;
             GuessNumber.Name = "GuessNumber";
             GuessNumber.ReadOnly = true;
-            GuessNumber.Width = 125;
             // 
             // Guess
             // 
+            Guess.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             Guess.FillWeight = 191.803284F;
             Guess.HeaderText = "Guess";
             Guess.MinimumWidth = 250;
@@ -432,12 +436,13 @@
             // 
             // Hint
             // 
-            Hint.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Hint.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             Hint.FillWeight = 8.196716F;
             Hint.HeaderText = "Hint";
             Hint.MinimumWidth = 225;
             Hint.Name = "Hint";
             Hint.ReadOnly = true;
+            Hint.Width = 225;
             // 
             // guessTextBox_1
             // 
@@ -547,6 +552,7 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(GameSummaryButton);
             panel2.Controls.Add(winLabel);
             panel2.Dock = DockStyle.Bottom;
             panel2.Location = new Point(0, 644);
@@ -554,11 +560,26 @@
             panel2.Size = new Size(1100, 56);
             panel2.TabIndex = 33;
             // 
+            // GameSummaryButton
+            // 
+            GameSummaryButton.FlatAppearance.BorderColor = Color.White;
+            GameSummaryButton.FlatStyle = FlatStyle.Flat;
+            GameSummaryButton.Font = new Font("Segoe UI", 18F);
+            GameSummaryButton.ForeColor = Color.LightGray;
+            GameSummaryButton.Location = new Point(845, 0);
+            GameSummaryButton.Name = "GameSummaryButton";
+            GameSummaryButton.Size = new Size(220, 47);
+            GameSummaryButton.TabIndex = 28;
+            GameSummaryButton.Text = "Game History";
+            GameSummaryButton.TextAlign = ContentAlignment.TopCenter;
+            GameSummaryButton.UseVisualStyleBackColor = true;
+            GameSummaryButton.Click += GameSummaryButton_Click;
+            // 
             // winLabel
             // 
             winLabel.AutoSize = true;
             winLabel.Font = new Font("Segoe UI", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            winLabel.Location = new Point(306, 0);
+            winLabel.Location = new Point(592, 0);
             winLabel.Name = "winLabel";
             winLabel.Size = new Size(0, 47);
             winLabel.TabIndex = 0;
@@ -567,6 +588,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             BackColor = Color.FromArgb(46, 51, 73);
             ClientSize = new Size(1100, 700);
             ContextMenuStrip = contextMenuStrip1;
@@ -650,6 +672,7 @@
         private ToolStripMenuItem newGameToolStripMenuItem1;
         private ToolStripMenuItem revealToolStripMenuItem1;
         private ToolStripMenuItem exitToolStripMenuItem1;
+        private Button GameSummaryButton;
         private DataGridViewTextBoxColumn GuessNumber;
         private DataGridViewTextBoxColumn Guess;
         private DataGridViewTextBoxColumn Hint;

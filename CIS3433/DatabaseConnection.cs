@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace CIS3433
 {
     public class DatabaseConnection
     {
-        String ConnectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\AB_Game_Database.mdf;Integrated Security=True;";
+        private string ConnectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\AB_Game_Database.mdf;Integrated Security=True;";
 
         public void UpdateTable(string playerName, string playingMode, DateTime gameDate, TimeSpan gameTime, int totalTries, int totalSeconds, string secretNumber, decimal gameScore, string guessDetails)
         {
@@ -42,8 +43,37 @@ namespace CIS3433
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                throw new Exception("Error inserting data into GamePlay table: " + ex.Message);
             }
+        }
+
+        public DataTable GetGamePlayData()
+        {
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT * FROM GamePlay";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                        {
+                            adapter.Fill(dataTable);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving data from GamePlay table: " + ex.Message);
+            }
+
+            return dataTable;
         }
     }
 }

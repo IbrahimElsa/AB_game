@@ -89,6 +89,17 @@ namespace AB_game
 
             winLabel.Visible = true;
             winLabel.Text = $"Congratulations! Score: {Score}";
+
+            // Call UpdateTable function with fake data
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+
+            string playingMode = "codebreaker";
+            DateTime gameDate = DateTime.Now;
+            TimeSpan gameTime = DateTime.Now.TimeOfDay;
+            string secretNumber = "1234";
+            string guessDetails = "Guess 1: 1234, Guess 2: 5678, Guess 3: 9012";
+
+            databaseConnection.UpdateTable(groupValue, playingMode, gameDate, gameTime, numberOfGuesses, elapsedSeconds, secretNumber, Score, guessDetails);
         }
 
         private async void SubmitHintButton_Click(object sender, EventArgs e)
@@ -175,20 +186,6 @@ namespace AB_game
             codeBreakerGame = new CodeBreakerGame();
             string newInitialGuess = codeBreakerGame.GenerateInitialGuess();
             PopulateGuessLabels(newInitialGuess);
-
-            // Call UpdateTable function with fake data
-            DatabaseConnection databaseConnection = new DatabaseConnection();
-            string playerName = "John Doe";
-            string playingMode = "Easy";
-            DateTime gameDate = DateTime.Now;
-            TimeSpan gameTime = TimeSpan.FromMinutes(5);
-            int totalTries = 10;
-            int totalSeconds = 300;
-            string secretNumber = "1234";
-            decimal gameScore = 100.00m;
-            string guessDetails = "Guess 1: 1234, Guess 2: 5678, Guess 3: 9012";
-
-            databaseConnection.UpdateTable(playerName, playingMode, gameDate, gameTime, totalTries, totalSeconds, secretNumber, gameScore, guessDetails);
         }
 
 

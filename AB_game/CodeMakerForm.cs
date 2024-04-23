@@ -97,7 +97,8 @@ namespace AB_game
             guessTextBox_4.Enabled = false;
 
             winLabel.Visible = true;
-            winLabel.Text = $"Congratulations! Score: {Score}";
+            GameSummaryButton.Visible = true;
+            winLabel.Text = $"Score: {Score}";
         }
 
         private void SubmitGuessButton_Click(object sender, EventArgs e)
@@ -197,6 +198,7 @@ namespace AB_game
             TimerLabel.Text = "Timer: 00:00";
 
             winLabel.Visible = false;
+            GameSummaryButton.Visible = false;
             dataGridView1.Rows.Clear();
         }
         private void GuessTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -252,6 +254,13 @@ namespace AB_game
             {
                 SubmitGuessButton.Focus();
             }
+        }
+
+        private void GameSummaryButton_Click(object sender, EventArgs e)
+        {
+            GameHistoryForm gameHistoryForm = new GameHistoryForm(groupValue);
+            gameHistoryForm.Show();
+            this.Hide();
         }
 
         // Timer Logic
