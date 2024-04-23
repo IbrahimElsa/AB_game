@@ -154,14 +154,15 @@ namespace AB_game
             dataGridView1.Rows.Add(rowNumber, guess, hint);
         }
 
+
+
+
         private void newGameBtn_Click(object sender, EventArgs e)
         {
             hintTextBox_1.Text = "";
             hintTextBox_2.Text = "";
-
             hintTextBox_1.Enabled = true;
             hintTextBox_2.Enabled = true;
-
             CodeBreakerTimer.Stop();
             timerPaused = false;
             TimerButton.Text = "Pause";
@@ -169,16 +170,28 @@ namespace AB_game
             elapsedSeconds = 0;
             TimerLabel.Text = "Timer: 00:00";
             numberOfGuesses = 0;
-
             winLabel.Visible = false;
-
             dataGridView1.Rows.Clear();
-
             codeBreakerGame = new CodeBreakerGame();
-
             string newInitialGuess = codeBreakerGame.GenerateInitialGuess();
             PopulateGuessLabels(newInitialGuess);
+
+            // Call UpdateTable function with fake data
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            string playerName = "John Doe";
+            string playingMode = "Easy";
+            DateTime gameDate = DateTime.Now;
+            TimeSpan gameTime = TimeSpan.FromMinutes(5);
+            int totalTries = 10;
+            int totalSeconds = 300;
+            string secretNumber = "1234";
+            decimal gameScore = 100.00m;
+            string guessDetails = "Guess 1: 1234, Guess 2: 5678, Guess 3: 9012";
+
+            databaseConnection.UpdateTable(playerName, playingMode, gameDate, gameTime, totalTries, totalSeconds, secretNumber, gameScore, guessDetails);
         }
+
+
         private void hintTextBox_1_TextChanged(object sender, EventArgs e)
         {
             if (hintTextBox_1.Text.Length == 1 && char.IsDigit(hintTextBox_1.Text[0]))
