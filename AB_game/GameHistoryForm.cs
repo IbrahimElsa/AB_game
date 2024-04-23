@@ -16,7 +16,7 @@ namespace AB_game
     {
         private DatabaseConnection databaseConnection;
         private string groupValue;
-
+        private string gameMode;
         private bool isDragging;
         private Point lastCursor;
         private Point lastForm;
@@ -32,7 +32,7 @@ namespace AB_game
             int nHeightEllipse
         );
 
-        public GameHistoryForm(string groupValue)
+        public GameHistoryForm(string groupValue, string gameMode)
         {
             InitializeComponent();
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
@@ -41,6 +41,7 @@ namespace AB_game
 
             this.groupValue = groupValue;
             GroupLabel.Text += " vs. Group " + groupValue;
+            this.gameMode = gameMode;
 
             menuStrip1.BackColor = Color.FromArgb(36, 42, 59);
             menuStrip1.ForeColor = Color.White;
@@ -64,6 +65,7 @@ namespace AB_game
             GroupLabel.MouseDown += PanelMouseDown;
             GroupLabel.MouseMove += PanelMouseMove;
             GroupLabel.MouseUp += PanelMouseUp;
+
         }
 
         private void GameHistoryForm_Load(object sender, EventArgs e)
@@ -169,9 +171,24 @@ namespace AB_game
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            base.OnFormClosing(e);
-            WelcomeForm welcomeForm = new WelcomeForm();
-            welcomeForm.Show();
+            if (gameMode == "codemaker")
+            {
+                base.OnFormClosing(e);
+                CodeMakerForm codeMakerForm = new CodeMakerForm(groupValue);
+                codeMakerForm.Show();
+            }
+            else if (gameMode == "codebreaker")
+            {
+                base.OnFormClosing(e);
+                CodeBreakerForm codeBreakerForm = new CodeBreakerForm(groupValue);
+                codeBreakerForm.Show();
+            }
+            else
+            {
+                base.OnFormClosing(e);
+                WelcomeForm welcomeForm = new WelcomeForm();
+                welcomeForm.Show();
+            }
         }
         private void ExitButton_Click(object sender, EventArgs e)
         {

@@ -66,8 +66,11 @@
             newGameToolStripMenuItem1 = new ToolStripMenuItem();
             exitToolStripMenuItem1 = new ToolStripMenuItem();
             CodeBreakerTimer = new System.Windows.Forms.Timer(components);
-            panel2 = new Panel();
             winLabel = new Label();
+            panel2 = new Panel();
+            ScoreTextBox = new TextBox();
+            SubmitGameButton = new Button();
+            contextMenuStrip2 = new ContextMenuStrip(components);
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ExitPanel.SuspendLayout();
@@ -227,7 +230,7 @@
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.FromArgb(46, 51, 73);
-            dataGridView1.Location = new Point(595, 135);
+            dataGridView1.Location = new Point(544, 135);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -242,7 +245,7 @@
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.RowTemplate.Height = 70;
-            dataGridView1.Size = new Size(473, 508);
+            dataGridView1.Size = new Size(524, 474);
             dataGridView1.TabIndex = 35;
             // 
             // dataGridViewTextBoxColumn1
@@ -478,23 +481,64 @@
             CodeBreakerTimer.Interval = 1000;
             CodeBreakerTimer.Tick += CodeBreakerTimer_Tick;
             // 
-            // panel2
-            // 
-            panel2.Controls.Add(winLabel);
-            panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 644);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1100, 56);
-            panel2.TabIndex = 42;
-            // 
             // winLabel
             // 
             winLabel.AutoSize = true;
+            winLabel.BorderStyle = BorderStyle.FixedSingle;
+            winLabel.Dock = DockStyle.Left;
             winLabel.Font = new Font("Segoe UI", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            winLabel.Location = new Point(306, 0);
+            winLabel.Location = new Point(0, 0);
             winLabel.Name = "winLabel";
-            winLabel.Size = new Size(0, 47);
+            winLabel.Padding = new Padding(0, 5, 0, 6);
+            winLabel.Size = new Size(116, 60);
             winLabel.TabIndex = 0;
+            winLabel.Text = "Score:";
+            winLabel.Visible = false;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(ScoreTextBox);
+            panel2.Controls.Add(winLabel);
+            panel2.Location = new Point(618, 626);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(232, 60);
+            panel2.TabIndex = 42;
+            // 
+            // ScoreTextBox
+            // 
+            ScoreTextBox.BackColor = Color.FromArgb(46, 51, 73);
+            ScoreTextBox.BorderStyle = BorderStyle.FixedSingle;
+            ScoreTextBox.Font = new Font("Segoe UI", 29.5F);
+            ScoreTextBox.ForeColor = Color.White;
+            ScoreTextBox.Location = new Point(115, 0);
+            ScoreTextBox.MaxLength = 3;
+            ScoreTextBox.Name = "ScoreTextBox";
+            ScoreTextBox.Size = new Size(65, 60);
+            ScoreTextBox.TabIndex = 45;
+            ScoreTextBox.TextAlign = HorizontalAlignment.Center;
+            ScoreTextBox.Visible = false;
+            ScoreTextBox.TextChanged += ScoreTextBox_TextChanged;
+            // 
+            // SubmitGameButton
+            // 
+            SubmitGameButton.FlatAppearance.BorderColor = Color.White;
+            SubmitGameButton.FlatStyle = FlatStyle.Flat;
+            SubmitGameButton.Font = new Font("Segoe UI", 18F);
+            SubmitGameButton.ForeColor = Color.LightGray;
+            SubmitGameButton.ImageAlign = ContentAlignment.TopCenter;
+            SubmitGameButton.Location = new Point(856, 626);
+            SubmitGameButton.Name = "SubmitGameButton";
+            SubmitGameButton.Size = new Size(232, 60);
+            SubmitGameButton.TabIndex = 43;
+            SubmitGameButton.Text = "Submit Game";
+            SubmitGameButton.UseVisualStyleBackColor = true;
+            SubmitGameButton.Visible = false;
+            SubmitGameButton.Click += SubmitGameButton_Click;
+            // 
+            // contextMenuStrip2
+            // 
+            contextMenuStrip2.Name = "contextMenuStrip2";
+            contextMenuStrip2.Size = new Size(61, 4);
             // 
             // CodeBreakerForm
             // 
@@ -502,6 +546,7 @@
             BackColor = Color.FromArgb(46, 51, 73);
             ClientSize = new Size(1100, 700);
             ContextMenuStrip = contextMenuStrip1;
+            Controls.Add(SubmitGameButton);
             Controls.Add(panel2);
             Controls.Add(newGameBtn);
             Controls.Add(ExitPanel);
@@ -570,10 +615,13 @@
         private Button TimerButton;
         private ToolStripMenuItem pauseStripMenuItem1;
         private ToolStripMenuItem pauseToolStripMenuItem;
-        private Panel panel2;
         private Label winLabel;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private Panel panel2;
+        private Button SubmitGameButton;
+        private TextBox ScoreTextBox;
+        private ContextMenuStrip contextMenuStrip2;
     }
 }

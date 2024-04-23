@@ -63,7 +63,7 @@ namespace AB_game
             }
         }
 
-        
+
 
         private void CodeMakerButton_Click(object sender, EventArgs e)
         {
@@ -85,6 +85,15 @@ namespace AB_game
                 codeBreakerForm.Show();
                 this.Hide();
             }
+        }
+
+        private void GameHistoryButton_Click(object sender, EventArgs e)
+        {
+            string groupValue = GroupTextBox.Text.Trim().Replace(" ", "_");
+            string gameMode = "";
+            GameHistoryForm gameHistoryForm = new GameHistoryForm(groupValue, gameMode);
+            gameHistoryForm.Show();
+            this.Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)

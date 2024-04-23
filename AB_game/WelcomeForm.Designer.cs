@@ -36,6 +36,7 @@
             GroupTextBox = new TextBox();
             button1 = new Button();
             ExitPanel = new Panel();
+            GameHistoryButton = new Button();
             ExitPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -44,7 +45,7 @@
             ExitButton.AutoSize = true;
             ExitButton.Font = new Font("Segoe UI", 40F, FontStyle.Bold);
             ExitButton.ForeColor = Color.White;
-            ExitButton.Location = new Point(120, 42);
+            ExitButton.Location = new Point(120, 66);
             ExitButton.Name = "ExitButton";
             ExitButton.Size = new Size(263, 72);
             ExitButton.TabIndex = 0;
@@ -55,7 +56,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 18F);
             label2.ForeColor = Color.Gainsboro;
-            label2.Location = new Point(191, 276);
+            label2.Location = new Point(188, 318);
             label2.Name = "label2";
             label2.Size = new Size(120, 64);
             label2.TabIndex = 1;
@@ -67,7 +68,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 20F);
             label3.ForeColor = Color.Gainsboro;
-            label3.Location = new Point(138, 114);
+            label3.Location = new Point(138, 138);
             label3.Name = "label3";
             label3.Size = new Size(224, 111);
             label3.TabIndex = 2;
@@ -81,7 +82,7 @@
             CodeMakerButton.FlatStyle = FlatStyle.Flat;
             CodeMakerButton.Font = new Font("Segoe UI", 18F);
             CodeMakerButton.ForeColor = Color.White;
-            CodeMakerButton.Location = new Point(60, 442);
+            CodeMakerButton.Location = new Point(50, 478);
             CodeMakerButton.Name = "CodeMakerButton";
             CodeMakerButton.Size = new Size(174, 62);
             CodeMakerButton.TabIndex = 3;
@@ -95,7 +96,7 @@
             CodeBreakerButton.FlatStyle = FlatStyle.Flat;
             CodeBreakerButton.Font = new Font("Segoe UI", 18F);
             CodeBreakerButton.ForeColor = Color.White;
-            CodeBreakerButton.Location = new Point(278, 442);
+            CodeBreakerButton.Location = new Point(276, 478);
             CodeBreakerButton.Name = "CodeBreakerButton";
             CodeBreakerButton.Size = new Size(174, 62);
             CodeBreakerButton.TabIndex = 4;
@@ -109,7 +110,7 @@
             GroupTextBox.BorderStyle = BorderStyle.FixedSingle;
             GroupTextBox.Font = new Font("Segoe UI", 18F);
             GroupTextBox.ForeColor = Color.White;
-            GroupTextBox.Location = new Point(158, 343);
+            GroupTextBox.Location = new Point(155, 385);
             GroupTextBox.Name = "GroupTextBox";
             GroupTextBox.PlaceholderText = "Name or Num";
             GroupTextBox.Size = new Size(189, 39);
@@ -134,18 +135,33 @@
             // ExitPanel
             // 
             ExitPanel.Controls.Add(button1);
-            ExitPanel.Dock = DockStyle.Top;
             ExitPanel.Location = new Point(0, 0);
             ExitPanel.Name = "ExitPanel";
             ExitPanel.Size = new Size(503, 50);
             ExitPanel.TabIndex = 6;
+            // 
+            // GameHistoryButton
+            // 
+            GameHistoryButton.BackColor = Color.FromArgb(46, 51, 73);
+            GameHistoryButton.CausesValidation = false;
+            GameHistoryButton.FlatStyle = FlatStyle.Flat;
+            GameHistoryButton.Font = new Font("Segoe UI", 18F);
+            GameHistoryButton.ForeColor = Color.White;
+            GameHistoryButton.Location = new Point(12, 12);
+            GameHistoryButton.Name = "GameHistoryButton";
+            GameHistoryButton.Size = new Size(174, 44);
+            GameHistoryButton.TabIndex = 7;
+            GameHistoryButton.Text = "Game History";
+            GameHistoryButton.UseVisualStyleBackColor = false;
+            GameHistoryButton.Click += GameHistoryButton_Click;
             // 
             // WelcomeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(46, 51, 73);
-            ClientSize = new Size(503, 555);
+            ClientSize = new Size(500, 600);
+            Controls.Add(GameHistoryButton);
             Controls.Add(ExitPanel);
             Controls.Add(GroupTextBox);
             Controls.Add(CodeBreakerButton);
@@ -173,5 +189,6 @@
         private TextBox GroupTextBox;
         private Button button1;
         private Panel ExitPanel;
+        private Button GameHistoryButton;
     }
 }

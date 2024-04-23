@@ -11,6 +11,8 @@ namespace AB_game
     {
         private CodeMakerGame codeMakerGame;
         private string groupValue;
+        private string gameMode = "codemaker";
+        private bool isNavigatingToGameHistory = false;
         private bool timerPaused;
         private int elapsedSeconds;
 
@@ -258,7 +260,8 @@ namespace AB_game
 
         private void GameSummaryButton_Click(object sender, EventArgs e)
         {
-            GameHistoryForm gameHistoryForm = new GameHistoryForm(groupValue);
+            isNavigatingToGameHistory = true;
+            GameHistoryForm gameHistoryForm = new GameHistoryForm(groupValue, gameMode);
             gameHistoryForm.Show();
             this.Hide();
         }
@@ -390,8 +393,11 @@ namespace AB_game
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
-            WelcomeForm welcomeForm = new WelcomeForm();
-            welcomeForm.Show();
+            if (!isNavigatingToGameHistory)
+            {
+                WelcomeForm welcomeForm = new WelcomeForm();
+                welcomeForm.Show();
+            }
         }
         private void ExitButton_Click(object sender, EventArgs e)
         {

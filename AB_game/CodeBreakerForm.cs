@@ -12,6 +12,9 @@ namespace AB_game
         private bool timerPaused;
         private int elapsedSeconds;
         private string groupValue;
+        private string gameMode = "codebreaker";
+        private bool isNavigatingToGameHistory = false;
+        private bool submitGame;
         private int numberOfGuesses;
         private bool isDragging;
         private Point lastCursor;
@@ -35,6 +38,8 @@ namespace AB_game
 
             codeBreakerGame = new CodeBreakerGame();
             numberOfGuesses = 0;
+
+            submitGame = false;
 
             this.groupValue = groupValue;
             GroupLabel.Text += " vs. Group " + groupValue;
@@ -77,30 +82,6 @@ namespace AB_game
             GuessLabel_3.Text = guess[2].ToString();
             GuessLabel_4.Text = guess[3].ToString();
         }
-        private void Win_Conditions(int numberOfGuesses)
-        {
-            int Score = 10 * (10 - numberOfGuesses + 1) - (elapsedSeconds / 10);
-
-            TimerButton.Visible = false;
-            CodeBreakerTimer.Stop();
-
-            hintTextBox_1.Enabled = false;
-            hintTextBox_2.Enabled = false;
-
-            winLabel.Visible = true;
-            winLabel.Text = $"Congratulations! Score: {Score}";
-
-            // Call UpdateTable function with fake data
-            DatabaseConnection databaseConnection = new DatabaseConnection();
-
-            string playingMode = "codebreaker";
-            DateTime gameDate = DateTime.Now;
-            TimeSpan gameTime = DateTime.Now.TimeOfDay;
-            string secretNumber = "1234";
-            string guessDetails = "Guess 1: 1234, Guess 2: 5678, Guess 3: 9012";
-
-            databaseConnection.UpdateTable(groupValue, playingMode, gameDate, gameTime, numberOfGuesses, elapsedSeconds, secretNumber, Score, guessDetails);
-        }
 
         private async void SubmitHintButton_Click(object sender, EventArgs e)
         {
@@ -127,31 +108,42 @@ namespace AB_game
                 TimerButton.Visible = true;
             }
 
-            // Make guess asynchronously and check if the game is finished
-            var result = await Task.Run(() => codeBreakerGame.MakeGuess(bulls, cows));
-
-            string nextGuess = result.Item1;
-            bool isGameFinished = result.Item2;
-
             string currentGuess = GuessLabel_1.Text + GuessLabel_2.Text + GuessLabel_3.Text + GuessLabel_4.Text;
-
-            // Add the current guess and hint to the DataGridView
             string hint = $"{bulls}A{cows}B";
-            AddGuessToDataGridView(currentGuess, hint);
-            PopulateGuessLabels(nextGuess);
-            numberOfGuesses++;
 
-            // If the game is finished, do something
-            if (isGameFinished)
+            bool isGameFinishedByHint = bulls == 4;
+
+            if (isGameFinishedByHint)
             {
-                // Do something when the game is finished, such as displaying a message or updating UI
+                AddGuessToDataGridView(currentGuess, hint);
+                numberOfGuesses++;
                 Win_Conditions(numberOfGuesses);
+            }
+            else
+            {
+                var result = await Task.Run(() => codeBreakerGame.MakeGuess(bulls, cows));
+                string nextGuess = result.Item1;
+                bool isGameFinished = result.Item2;
+
+                AddGuessToDataGridView(currentGuess, hint);
+
+                if (isGameFinished)
+                {
+                    PopulateGuessLabels(nextGuess);
+                    AddGuessToDataGridView(nextGuess, hint);
+                    numberOfGuesses += 2;
+                    Win_Conditions(numberOfGuesses);
+                }
+                else
+                {
+                    PopulateGuessLabels(nextGuess);
+                    numberOfGuesses++;
+                }
             }
 
             // Clear the input fields
             hintTextBox_1.Text = string.Empty;
             hintTextBox_2.Text = string.Empty;
-
             hintTextBox_1.Focus();
         }
 
@@ -182,6 +174,10 @@ namespace AB_game
             TimerLabel.Text = "Timer: 00:00";
             numberOfGuesses = 0;
             winLabel.Visible = false;
+            ScoreTextBox.Visible = false;
+            SubmitGameButton.Visible = false;
+            SubmitGameButton.Text = "Submit Game";
+            submitGame = false;
             dataGridView1.Rows.Clear();
             codeBreakerGame = new CodeBreakerGame();
             string newInitialGuess = codeBreakerGame.GenerateInitialGuess();
@@ -224,6 +220,82 @@ namespace AB_game
                 hintTextBox_2.Text = "";
             }
         }
+
+        private int Score;
+
+        private void Win_Conditions(int numberOfGuesses)
+        {
+            Score = 10 * (10 - numberOfGuesses + 1) - (elapsedSeconds / 10);
+            TimerButton.Visible = false;
+            CodeBreakerTimer.Stop();
+            hintTextBox_1.Enabled = false;
+            hintTextBox_2.Enabled = false;
+            winLabel.Visible = true;
+            SubmitGameButton.Visible = true;
+            ScoreTextBox.Visible = true;
+            ScoreTextBox.Text = $"{Score}";
+        }
+
+        private void ScoreTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ScoreTextBox.Text))
+            {
+                Score = 0;
+            }
+            else if (int.TryParse(ScoreTextBox.Text, out int newScore))
+            {
+                Score = newScore;
+            }
+            else
+            {
+                ScoreTextBox.Text = $"{Score}";
+            }
+        }
+
+
+
+        private void SubmitGameButton_Click(object sender, EventArgs e)
+        {
+            if (!submitGame)
+            {
+                DatabaseConnection databaseConnection = new DatabaseConnection();
+
+                DateTime gameDate = DateTime.Now;
+                TimeSpan gameTime = DateTime.Now.TimeOfDay;
+                string secretNumber = GuessLabel_1.Text + GuessLabel_2.Text + GuessLabel_3.Text + GuessLabel_4.Text;
+
+                // Extract guess details from the dataGridView
+                string guessDetails = "";
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    if (row.Cells[1].Value != null && row.Cells[2].Value != null)
+                    {
+                        string guess = row.Cells[1].Value?.ToString() ?? string.Empty;
+                        string hint = row.Cells[2].Value?.ToString() ?? string.Empty;
+                        guessDetails += $"Guess {row.Index + 1}: {guess} ({hint}), ";
+                    }
+                }
+
+                // Remove the trailing comma and space
+                if (guessDetails.EndsWith(", "))
+                {
+                    guessDetails = guessDetails.Substring(0, guessDetails.Length - 2);
+                }
+
+                databaseConnection.UpdateTable(groupValue, gameMode, gameDate, gameTime, numberOfGuesses, elapsedSeconds, secretNumber, Score, guessDetails);
+
+                SubmitGameButton.Text = "Game History";
+                submitGame = true;
+            }
+            else
+            {
+                isNavigatingToGameHistory = true;
+                GameHistoryForm gameHistoryForm = new GameHistoryForm(groupValue, gameMode);
+                gameHistoryForm.Show();
+                this.Close();
+            }
+        }
+
 
 
         // Timer Logic
@@ -340,8 +412,11 @@ namespace AB_game
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
-            WelcomeForm welcomeForm = new WelcomeForm();
-            welcomeForm.Show();
+            if (!isNavigatingToGameHistory)
+            {
+                WelcomeForm welcomeForm = new WelcomeForm();
+                welcomeForm.Show();
+            }
         }
         private void ExitButton_Click(object sender, EventArgs e)
         {
