@@ -245,7 +245,7 @@
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.RowTemplate.Height = 70;
-            dataGridView1.Size = new Size(524, 474);
+            dataGridView1.Size = new Size(512, 474);
             dataGridView1.TabIndex = 35;
             // 
             // dataGridViewTextBoxColumn1
@@ -510,7 +510,7 @@
             ScoreTextBox.BorderStyle = BorderStyle.FixedSingle;
             ScoreTextBox.Font = new Font("Segoe UI", 29.5F);
             ScoreTextBox.ForeColor = Color.White;
-            ScoreTextBox.Location = new Point(115, 0);
+            ScoreTextBox.Location = new Point(111, 0);
             ScoreTextBox.MaxLength = 3;
             ScoreTextBox.Name = "ScoreTextBox";
             ScoreTextBox.Size = new Size(65, 60);

@@ -72,9 +72,10 @@
             guessTextBox_3 = new TextBox();
             label3 = new Label();
             CodeMakerTimer = new System.Windows.Forms.Timer(components);
-            panel2 = new Panel();
-            GameSummaryButton = new Button();
+            SubmitGameButton = new Button();
             winLabel = new Label();
+            panel2 = new Panel();
+            ScoreTextBox = new TextBox();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             ExitPanel.SuspendLayout();
@@ -413,7 +414,7 @@
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             dataGridView1.RowTemplate.Height = 70;
             dataGridView1.ScrollBars = ScrollBars.Vertical;
-            dataGridView1.Size = new Size(512, 508);
+            dataGridView1.Size = new Size(512, 480);
             dataGridView1.TabIndex = 24;
             // 
             // GuessNumber
@@ -550,39 +551,58 @@
             CodeMakerTimer.Interval = 1000;
             CodeMakerTimer.Tick += CodeMakerTimer_Tick;
             // 
-            // panel2
+            // SubmitGameButton
             // 
-            panel2.Controls.Add(GameSummaryButton);
-            panel2.Controls.Add(winLabel);
-            panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 644);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1100, 56);
-            panel2.TabIndex = 33;
-            // 
-            // GameSummaryButton
-            // 
-            GameSummaryButton.FlatAppearance.BorderColor = Color.White;
-            GameSummaryButton.FlatStyle = FlatStyle.Flat;
-            GameSummaryButton.Font = new Font("Segoe UI", 18F);
-            GameSummaryButton.ForeColor = Color.LightGray;
-            GameSummaryButton.Location = new Point(845, 0);
-            GameSummaryButton.Name = "GameSummaryButton";
-            GameSummaryButton.Size = new Size(220, 47);
-            GameSummaryButton.TabIndex = 28;
-            GameSummaryButton.Text = "Game History";
-            GameSummaryButton.TextAlign = ContentAlignment.TopCenter;
-            GameSummaryButton.UseVisualStyleBackColor = true;
-            GameSummaryButton.Click += GameSummaryButton_Click;
+            SubmitGameButton.FlatAppearance.BorderColor = Color.White;
+            SubmitGameButton.FlatStyle = FlatStyle.Flat;
+            SubmitGameButton.Font = new Font("Segoe UI", 18F);
+            SubmitGameButton.ForeColor = Color.LightGray;
+            SubmitGameButton.Location = new Point(856, 626);
+            SubmitGameButton.Name = "SubmitGameButton";
+            SubmitGameButton.Size = new Size(232, 60);
+            SubmitGameButton.TabIndex = 28;
+            SubmitGameButton.Text = "Submit Game";
+            SubmitGameButton.UseVisualStyleBackColor = true;
+            SubmitGameButton.Visible = false;
+            SubmitGameButton.Click += SubmitGameButton_Click;
             // 
             // winLabel
             // 
             winLabel.AutoSize = true;
+            winLabel.BorderStyle = BorderStyle.FixedSingle;
+            winLabel.Dock = DockStyle.Left;
             winLabel.Font = new Font("Segoe UI", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            winLabel.Location = new Point(592, 0);
+            winLabel.Location = new Point(0, 0);
             winLabel.Name = "winLabel";
-            winLabel.Size = new Size(0, 47);
+            winLabel.Padding = new Padding(0, 5, 0, 6);
+            winLabel.Size = new Size(116, 60);
             winLabel.TabIndex = 0;
+            winLabel.Text = "Score:";
+            winLabel.Visible = false;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(ScoreTextBox);
+            panel2.Controls.Add(winLabel);
+            panel2.Location = new Point(618, 626);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(232, 60);
+            panel2.TabIndex = 33;
+            // 
+            // ScoreTextBox
+            // 
+            ScoreTextBox.BackColor = Color.FromArgb(46, 51, 73);
+            ScoreTextBox.BorderStyle = BorderStyle.FixedSingle;
+            ScoreTextBox.Font = new Font("Segoe UI", 29.5F);
+            ScoreTextBox.ForeColor = Color.White;
+            ScoreTextBox.Location = new Point(111, 0);
+            ScoreTextBox.MaxLength = 3;
+            ScoreTextBox.Name = "ScoreTextBox";
+            ScoreTextBox.Size = new Size(65, 60);
+            ScoreTextBox.TabIndex = 46;
+            ScoreTextBox.TextAlign = HorizontalAlignment.Center;
+            ScoreTextBox.Visible = false;
+            ScoreTextBox.TextChanged += ScoreTextBox_TextChanged;
             // 
             // CodeMakerForm
             // 
@@ -593,6 +613,7 @@
             ClientSize = new Size(1100, 700);
             ContextMenuStrip = contextMenuStrip1;
             Controls.Add(panel2);
+            Controls.Add(SubmitGameButton);
             Controls.Add(label3);
             Controls.Add(guessTextBox_3);
             Controls.Add(guessTextBox_4);
@@ -657,8 +678,6 @@
         private Label label3;
         private System.Windows.Forms.Timer CodeMakerTimer;
         private Label TimerLabel;
-        private Panel panel2;
-        private Label winLabel;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem menuToolStripMenuItem;
         private ToolStripMenuItem pauseToolStripMenuItem;
@@ -672,9 +691,12 @@
         private ToolStripMenuItem newGameToolStripMenuItem1;
         private ToolStripMenuItem revealToolStripMenuItem1;
         private ToolStripMenuItem exitToolStripMenuItem1;
-        private Button GameSummaryButton;
+        private Button SubmitGameButton;
         private DataGridViewTextBoxColumn GuessNumber;
         private DataGridViewTextBoxColumn Guess;
         private DataGridViewTextBoxColumn Hint;
+        private Label winLabel;
+        private Panel panel2;
+        private TextBox ScoreTextBox;
     }
 }

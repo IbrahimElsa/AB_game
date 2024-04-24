@@ -226,10 +226,13 @@ namespace AB_game
         private void Win_Conditions(int numberOfGuesses)
         {
             Score = 10 * (10 - numberOfGuesses + 1) - (elapsedSeconds / 10);
+
             TimerButton.Visible = false;
             CodeBreakerTimer.Stop();
+
             hintTextBox_1.Enabled = false;
             hintTextBox_2.Enabled = false;
+
             winLabel.Visible = true;
             SubmitGameButton.Visible = true;
             ScoreTextBox.Visible = true;

@@ -10,9 +10,13 @@ namespace AB_game
     public partial class CodeMakerForm : Form
     {
         private CodeMakerGame codeMakerGame;
+
         private string groupValue;
         private string gameMode = "codemaker";
         private bool isNavigatingToGameHistory = false;
+        private bool submitGame;
+        private int numberOfGuesses;
+
         private bool timerPaused;
         private int elapsedSeconds;
 
@@ -38,6 +42,9 @@ namespace AB_game
             Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
 
             codeMakerGame = new CodeMakerGame();
+            numberOfGuesses = 0;
+
+            submitGame = false;
 
             this.groupValue = groupValue;
             GroupLabel.Text += " vs. Group " + groupValue;
@@ -71,38 +78,6 @@ namespace AB_game
         }
 
 
-        private void Win_Conditions(int GuessNumber)
-        {
-            int Score = 10 * (10 - GuessNumber + 1) - (elapsedSeconds / 10);
-
-            TimerButton.Visible = false;
-            CodeMakerTimer.Stop();
-
-            if (codeMakerGame.SecretNumber != null && codeMakerGame.SecretNumber.Length >= 4)
-            {
-                SecretLabel_1.Text = codeMakerGame.SecretNumber[0].ToString();
-                SecretLabel_2.Text = codeMakerGame.SecretNumber[1].ToString();
-                SecretLabel_3.Text = codeMakerGame.SecretNumber[2].ToString();
-                SecretLabel_4.Text = codeMakerGame.SecretNumber[3].ToString();
-            }
-            else
-            {
-                SecretLabel_1.Text = "?";
-                SecretLabel_2.Text = "?";
-                SecretLabel_3.Text = "?";
-                SecretLabel_4.Text = "?";
-            }
-
-            guessTextBox_1.Enabled = false;
-            guessTextBox_2.Enabled = false;
-            guessTextBox_3.Enabled = false;
-            guessTextBox_4.Enabled = false;
-
-            winLabel.Visible = true;
-            GameSummaryButton.Visible = true;
-            winLabel.Text = $"Score: {Score}";
-        }
-
         private void SubmitGuessButton_Click(object sender, EventArgs e)
         {
             // Check if all guess text boxes are filled with valid numbers
@@ -115,6 +90,7 @@ namespace AB_game
                 }
 
                 string guess = guessTextBox_1.Text + guessTextBox_2.Text + guessTextBox_3.Text + guessTextBox_4.Text;
+                numberOfGuesses++;
                 string result = codeMakerGame.EvaluateGuess(guess);
 
                 // Get the current guess number
@@ -198,9 +174,14 @@ namespace AB_game
             TimerButton.Visible = false;
             elapsedSeconds = 0;
             TimerLabel.Text = "Timer: 00:00";
+            numberOfGuesses = 0;
 
             winLabel.Visible = false;
-            GameSummaryButton.Visible = false;
+            ScoreTextBox.Visible = false;
+            SubmitGameButton.Visible = false;
+            SubmitGameButton.Text = "Submit Game";
+            submitGame = false;
+            SubmitGameButton.Visible = false;
             dataGridView1.Rows.Clear();
         }
         private void GuessTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -258,13 +239,102 @@ namespace AB_game
             }
         }
 
-        private void GameSummaryButton_Click(object sender, EventArgs e)
+
+
+        private int Score;
+
+        private void Win_Conditions(int GuessNumber)
         {
-            isNavigatingToGameHistory = true;
-            GameHistoryForm gameHistoryForm = new GameHistoryForm(groupValue, gameMode);
-            gameHistoryForm.Show();
-            this.Hide();
+            int Score = 10 * (10 - GuessNumber + 1) - (elapsedSeconds / 10);
+
+            TimerButton.Visible = false;
+            CodeMakerTimer.Stop();
+
+            if (codeMakerGame.SecretNumber != null && codeMakerGame.SecretNumber.Length >= 4)
+            {
+                SecretLabel_1.Text = codeMakerGame.SecretNumber[0].ToString();
+                SecretLabel_2.Text = codeMakerGame.SecretNumber[1].ToString();
+                SecretLabel_3.Text = codeMakerGame.SecretNumber[2].ToString();
+                SecretLabel_4.Text = codeMakerGame.SecretNumber[3].ToString();
+            }
+            else
+            {
+                SecretLabel_1.Text = "?";
+                SecretLabel_2.Text = "?";
+                SecretLabel_3.Text = "?";
+                SecretLabel_4.Text = "?";
+            }
+
+            guessTextBox_1.Enabled = false;
+            guessTextBox_2.Enabled = false;
+            guessTextBox_3.Enabled = false;
+            guessTextBox_4.Enabled = false;
+
+            winLabel.Visible = true;
+            SubmitGameButton.Visible = true;
+            ScoreTextBox.Visible = true;
+            ScoreTextBox.Text = $"{Score}";
         }
+
+        private void ScoreTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ScoreTextBox.Text))
+            {
+                Score = 0;
+            }
+            else if (int.TryParse(ScoreTextBox.Text, out int newScore))
+            {
+                Score = newScore;
+            }
+            else
+            {
+                ScoreTextBox.Text = $"{Score}";
+            }
+        }
+
+        private void SubmitGameButton_Click(object sender, EventArgs e)
+        {
+            if (!submitGame)
+            {
+                DatabaseConnection databaseConnection = new DatabaseConnection();
+
+                DateTime gameDate = DateTime.Now;
+                TimeSpan gameTime = DateTime.Now.TimeOfDay;
+                string secretNumber = codeMakerGame.SecretNumber != null ? codeMakerGame.SecretNumber.ToString() : string.Empty;
+
+                // Extract guess details from the dataGridView
+                string guessDetails = "";
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    if (row.Cells[1].Value != null && row.Cells[2].Value != null)
+                    {
+                        string guess = row.Cells[1].Value?.ToString() ?? string.Empty;
+                        string hint = row.Cells[2].Value?.ToString() ?? string.Empty;
+                        guessDetails += $"Guess {row.Index + 1}: {guess} ({hint}), ";
+                    }
+                }
+
+                // Remove the trailing comma and space
+                if (guessDetails.EndsWith(", "))
+                {
+                    guessDetails = guessDetails.Substring(0, guessDetails.Length - 2);
+                }
+
+                databaseConnection.UpdateTable(groupValue, gameMode, gameDate, gameTime, numberOfGuesses, elapsedSeconds, secretNumber, Score, guessDetails);
+
+                SubmitGameButton.Text = "Game History";
+                submitGame = true;
+            }
+            else
+            {
+                isNavigatingToGameHistory = true;
+                GameHistoryForm gameHistoryForm = new GameHistoryForm(groupValue, gameMode);
+                gameHistoryForm.Show();
+                this.Close();
+            }
+        }
+
+
 
         // Timer Logic
         private void TimerButton_Click(object sender, EventArgs e)
