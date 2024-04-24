@@ -99,7 +99,7 @@
             panel1.Controls.Add(label1);
             panel1.Location = new Point(12, 46);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1076, 67);
+            panel1.Size = new Size(1038, 67);
             panel1.TabIndex = 8;
             // 
             // TimerButton
@@ -110,7 +110,7 @@
             TimerButton.Font = new Font("Segoe UI", 24F);
             TimerButton.ForeColor = Color.LightGray;
             TimerButton.ImageAlign = ContentAlignment.TopCenter;
-            TimerButton.Location = new Point(910, 0);
+            TimerButton.Location = new Point(872, 0);
             TimerButton.Name = "TimerButton";
             TimerButton.Size = new Size(166, 67);
             TimerButton.TabIndex = 42;
@@ -230,7 +230,7 @@
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.FromArgb(46, 51, 73);
-            dataGridView1.Location = new Point(544, 135);
+            dataGridView1.Location = new Point(538, 135);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -499,7 +499,7 @@
             // 
             panel2.Controls.Add(ScoreTextBox);
             panel2.Controls.Add(winLabel);
-            panel2.Location = new Point(618, 626);
+            panel2.Location = new Point(538, 626);
             panel2.Name = "panel2";
             panel2.Size = new Size(232, 60);
             panel2.TabIndex = 42;
@@ -526,7 +526,7 @@
             SubmitGameButton.Font = new Font("Segoe UI", 18F);
             SubmitGameButton.ForeColor = Color.LightGray;
             SubmitGameButton.ImageAlign = ContentAlignment.TopCenter;
-            SubmitGameButton.Location = new Point(856, 626);
+            SubmitGameButton.Location = new Point(818, 626);
             SubmitGameButton.Name = "SubmitGameButton";
             SubmitGameButton.Size = new Size(232, 60);
             SubmitGameButton.TabIndex = 43;

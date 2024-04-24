@@ -170,7 +170,7 @@
             panel3.Controls.Add(TimerLabel);
             panel3.Location = new Point(498, 3);
             panel3.Name = "panel3";
-            panel3.Size = new Size(578, 64);
+            panel3.Size = new Size(540, 64);
             panel3.TabIndex = 30;
             // 
             // TimerButton
@@ -181,7 +181,7 @@
             TimerButton.Font = new Font("Segoe UI", 24F);
             TimerButton.ForeColor = Color.LightGray;
             TimerButton.ImageAlign = ContentAlignment.TopCenter;
-            TimerButton.Location = new Point(412, 0);
+            TimerButton.Location = new Point(374, 0);
             TimerButton.Name = "TimerButton";
             TimerButton.Size = new Size(166, 64);
             TimerButton.TabIndex = 30;
@@ -398,11 +398,12 @@
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.FromArgb(64, 70, 86);
-            dataGridView1.Location = new Point(553, 130);
+            dataGridView1.Location = new Point(555, 130);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
+            dataGridView1.RightToLeft = RightToLeft.No;
             dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = Color.FromArgb(46, 51, 73);
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 32.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle3.ForeColor = SystemColors.Window;
@@ -412,38 +413,40 @@
             dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
-            dataGridView1.RowTemplate.Height = 70;
+            dataGridView1.RowTemplate.Height = 45;
             dataGridView1.ScrollBars = ScrollBars.Vertical;
-            dataGridView1.Size = new Size(512, 480);
+            dataGridView1.Size = new Size(495, 480);
             dataGridView1.TabIndex = 24;
             // 
             // GuessNumber
             // 
             GuessNumber.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            GuessNumber.FillWeight = 20F;
             GuessNumber.HeaderText = "#";
-            GuessNumber.MinimumWidth = 100;
+            GuessNumber.MinimumWidth = 150;
             GuessNumber.Name = "GuessNumber";
             GuessNumber.ReadOnly = true;
+            GuessNumber.Width = 150;
             // 
             // Guess
             // 
             Guess.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Guess.FillWeight = 191.803284F;
+            Guess.FillWeight = 40F;
             Guess.HeaderText = "Guess";
-            Guess.MinimumWidth = 250;
+            Guess.MinimumWidth = 180;
             Guess.Name = "Guess";
             Guess.ReadOnly = true;
-            Guess.Width = 250;
+            Guess.Width = 180;
             // 
             // Hint
             // 
             Hint.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Hint.FillWeight = 8.196716F;
+            Hint.FillWeight = 40F;
             Hint.HeaderText = "Hint";
-            Hint.MinimumWidth = 225;
+            Hint.MinimumWidth = 180;
             Hint.Name = "Hint";
             Hint.ReadOnly = true;
-            Hint.Width = 225;
+            Hint.Width = 180;
             // 
             // guessTextBox_1
             // 
@@ -557,7 +560,7 @@
             SubmitGameButton.FlatStyle = FlatStyle.Flat;
             SubmitGameButton.Font = new Font("Segoe UI", 18F);
             SubmitGameButton.ForeColor = Color.LightGray;
-            SubmitGameButton.Location = new Point(856, 626);
+            SubmitGameButton.Location = new Point(818, 626);
             SubmitGameButton.Name = "SubmitGameButton";
             SubmitGameButton.Size = new Size(232, 60);
             SubmitGameButton.TabIndex = 28;
@@ -584,7 +587,7 @@
             // 
             panel2.Controls.Add(ScoreTextBox);
             panel2.Controls.Add(winLabel);
-            panel2.Location = new Point(618, 626);
+            panel2.Location = new Point(555, 626);
             panel2.Name = "panel2";
             panel2.Size = new Size(232, 60);
             panel2.TabIndex = 33;
@@ -606,8 +609,8 @@
             // 
             // CodeMakerForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             AutoSize = true;
             BackColor = Color.FromArgb(46, 51, 73);
             ClientSize = new Size(1100, 700);
@@ -692,11 +695,11 @@
         private ToolStripMenuItem revealToolStripMenuItem1;
         private ToolStripMenuItem exitToolStripMenuItem1;
         private Button SubmitGameButton;
-        private DataGridViewTextBoxColumn GuessNumber;
-        private DataGridViewTextBoxColumn Guess;
-        private DataGridViewTextBoxColumn Hint;
         private Label winLabel;
         private Panel panel2;
         private TextBox ScoreTextBox;
+        private DataGridViewTextBoxColumn GuessNumber;
+        private DataGridViewTextBoxColumn Guess;
+        private DataGridViewTextBoxColumn Hint;
     }
 }

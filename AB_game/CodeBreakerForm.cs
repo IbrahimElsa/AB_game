@@ -16,6 +16,7 @@ namespace AB_game
         private bool isNavigatingToGameHistory = false;
         private bool submitGame;
         private int numberOfGuesses;
+
         private bool isDragging;
         private Point lastCursor;
         private Point lastForm;
