@@ -6,7 +6,7 @@ namespace CIS3433
 {
     public class CodeBreakerGame
     {
-        private List<string> possibleGuesses;
+        private readonly List<string> possibleGuesses;
 
         public List<string> Guesses { get; private set; }
 
@@ -26,7 +26,7 @@ namespace CIS3433
 
         public string GenerateInitialGuess()
         {
-            string initialGuess = "0123"; // Use a fixed initial guess for better information gain
+            string initialGuess = possibleGuesses[0];
             Guesses.Add(initialGuess);
             return initialGuess;
         }
@@ -56,58 +56,29 @@ namespace CIS3433
         private void RemoveInvalidGuesses(int bulls, int cows)
         {
             string lastGuess = Guesses.Last();
-            HashSet<string> validGuesses = new HashSet<string>(possibleGuesses);
-
-            foreach (string guess in possibleGuesses)
-            {
-                if (CountBulls(guess, lastGuess) != bulls || CountCows(guess, lastGuess) != cows)
-                {
-                    validGuesses.Remove(guess);
-                }
-            }
-
-            possibleGuesses = validGuesses.ToList();
+            possibleGuesses.RemoveAll(guess =>
+                CountBulls(guess, lastGuess) != bulls ||
+                CountCows(guess, lastGuess) != cows);
         }
 
         private string SelectNextGuess()
         {
-            Dictionary<string, double> guessEntropies = new Dictionary<string, double>();
+            Dictionary<string, int> guessCounts = new Dictionary<string, int>();
 
             foreach (string guess in possibleGuesses)
             {
-                double entropy = CalculateEntropy(guess);
-                guessEntropies[guess] = entropy;
+                int count = CountPossibleSolutions(guess);
+                guessCounts[guess] = count;
             }
 
-            return guessEntropies.OrderBy(x => x.Value).First().Key;
+            return guessCounts.OrderBy(x => x.Value).First().Key;
         }
 
-        private double CalculateEntropy(string guess)
+        private int CountPossibleSolutions(string guess)
         {
-            Dictionary<(int, int), int> countDistribution = new Dictionary<(int, int), int>();
-
-            foreach (string possibleSolution in possibleGuesses)
-            {
-                int bulls = CountBulls(guess, possibleSolution);
-                int cows = CountCows(guess, possibleSolution);
-
-                if (!countDistribution.ContainsKey((bulls, cows)))
-                {
-                    countDistribution[(bulls, cows)] = 0;
-                }
-
-                countDistribution[(bulls, cows)]++;
-            }
-
-            double entropy = 0;
-
-            foreach (int count in countDistribution.Values)
-            {
-                double probability = (double)count / possibleGuesses.Count;
-                entropy -= probability * Math.Log(probability, 2);
-            }
-
-            return entropy;
+            return possibleGuesses.Count(g =>
+                CountBulls(guess, g) == CountBulls(Guesses.Last(), g) &&
+                CountCows(guess, g) == CountCows(Guesses.Last(), g));
         }
 
         private int CountBulls(string guess, string secretNumber)
