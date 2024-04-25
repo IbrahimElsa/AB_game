@@ -40,7 +40,6 @@ namespace CIS3433
 
         public (string finalGuess, bool isGameFinished) MakeGuess(int bulls, int cows)
         {
-            UpdateGuessScores(bulls, cows);
             RemoveInvalidGuesses(bulls, cows);
 
             // If there's only one possible guess remaining, return it and indicate the game is finished
@@ -51,30 +50,29 @@ namespace CIS3433
                 return (finalGuess, true);
             }
 
-            // Otherwise, continue with the current strategy to choose the best guess
-            string bestGuess = possibleGuesses
-                .OrderByDescending(guess => guessScores[guess])
-                .FirstOrDefault(guess => guess.Distinct().Count() == 4) ?? string.Empty;
+            // Create a separate list of candidate guesses
+            List<string> candidateGuesses = possibleGuesses.Where(guess => guess.Distinct().Count() == 4).ToList();
 
-            if (!string.IsNullOrEmpty(bestGuess))
+            // Create a cache for storing previous counts
+            Dictionary<string, int> countCache = new Dictionary<string, int>();
+
+            // Use a priority queue to store candidate guesses ordered by their scores
+            PriorityQueue<string, int> candidateScores = new PriorityQueue<string, int>();
+
+            foreach (var candidateGuess in candidateGuesses)
             {
-                Guesses.Add(bestGuess);
+                int score = CountPossibleSolutions(candidateGuess, possibleGuesses, bulls, cows, countCache);
+                candidateScores.Enqueue(candidateGuess, -score); // Negative score for descending order
             }
+
+            string bestGuess = candidateScores.Dequeue();
+            Guesses.Add(bestGuess);
 
             // Check if the game is finished (i.e., there's only one possible guess left)
             bool isGameFinished = possibleGuesses.Count == 1;
 
             // Return whether the game is finished
             return (bestGuess, isGameFinished);
-        }
-
-        private void UpdateGuessScores(int bulls, int cows)
-        {
-            foreach (var possibleGuess in possibleGuesses)
-            {
-                int score = CountPossibleSolutions(possibleGuess, possibleGuesses, bulls, cows);
-                guessScores[possibleGuess] = Math.Min(score, guessScores[possibleGuess]);
-            }
         }
 
         private void RemoveInvalidGuesses(int bulls, int cows)
@@ -85,10 +83,19 @@ namespace CIS3433
                 CountCows(guess, lastGuess) != cows);
         }
 
-        private int CountPossibleSolutions(string guess, List<string> possibleGuesses, int bulls, int cows)
+        private int CountPossibleSolutions(string guess, List<string> possibleGuesses, int bulls, int cows, Dictionary<string, int> countCache)
         {
-            return possibleGuesses.Count(g =>
-                CountBulls(guess, g) == bulls && CountCows(guess, g) == cows);
+            string key = $"{guess}_{bulls}_{cows}";
+
+            if (countCache.TryGetValue(key, out int count))
+            {
+                return count;
+            }
+
+            count = possibleGuesses.Count(g => CountBulls(guess, g) == bulls && CountCows(guess, g) == cows);
+            countCache[key] = count;
+
+            return count;
         }
 
         private int CountBulls(string guess, string secretNumber)
