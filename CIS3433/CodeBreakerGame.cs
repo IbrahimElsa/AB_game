@@ -7,7 +7,6 @@ namespace CIS3433
     public class CodeBreakerGame
     {
         private readonly List<string> possibleGuesses;
-        private readonly Dictionary<string, int> guessScores;
 
         public List<string> Guesses { get; private set; }
 
@@ -15,11 +14,6 @@ namespace CIS3433
         {
             Guesses = new List<string>();
             possibleGuesses = GeneratePossibleGuesses();
-            guessScores = new Dictionary<string, int>(possibleGuesses.Count);
-            foreach (var guess in possibleGuesses)
-            {
-                guessScores[guess] = 0;
-            }
         }
 
         private List<string> GeneratePossibleGuesses()
@@ -33,7 +27,6 @@ namespace CIS3433
         public string GenerateInitialGuess()
         {
             string initialGuess = possibleGuesses[new Random().Next(possibleGuesses.Count)];
-            //string initialGuess = "0123";
             Guesses.Add(initialGuess);
             return initialGuess;
         }
@@ -42,7 +35,11 @@ namespace CIS3433
         {
             RemoveInvalidGuesses(bulls, cows);
 
-            // If there's only one possible guess remaining, return it and indicate the game is finished
+            if (bulls == 4)
+            {
+                return (Guesses.Last(), true);
+            }
+
             if (possibleGuesses.Count == 1)
             {
                 string finalGuess = possibleGuesses[0];
@@ -50,80 +47,48 @@ namespace CIS3433
                 return (finalGuess, true);
             }
 
-            // Create a separate list of candidate guesses
-            List<string> candidateGuesses = possibleGuesses.Where(guess => guess.Distinct().Count() == 4).ToList();
+            string nextGuess = SelectNextGuess();
+            Guesses.Add(nextGuess);
 
-            // Create a cache for storing previous counts
-            Dictionary<string, int> countCache = new Dictionary<string, int>();
-
-            // Use a priority queue to store candidate guesses ordered by their scores
-            PriorityQueue<string, int> candidateScores = new PriorityQueue<string, int>();
-
-            foreach (var candidateGuess in candidateGuesses)
-            {
-                int score = CountPossibleSolutions(candidateGuess, possibleGuesses, bulls, cows, countCache);
-                candidateScores.Enqueue(candidateGuess, -score); // Negative score for descending order
-            }
-
-            string bestGuess = candidateScores.Dequeue();
-            Guesses.Add(bestGuess);
-
-            // Check if the game is finished (i.e., there's only one possible guess left)
-            bool isGameFinished = possibleGuesses.Count == 1;
-
-            // Return whether the game is finished
-            return (bestGuess, isGameFinished);
+            return (nextGuess, false);
         }
 
         private void RemoveInvalidGuesses(int bulls, int cows)
         {
-            string lastGuess = Guesses.LastOrDefault() ?? string.Empty;
+            string lastGuess = Guesses.Last();
             possibleGuesses.RemoveAll(guess =>
                 CountBulls(guess, lastGuess) != bulls ||
                 CountCows(guess, lastGuess) != cows);
         }
 
-        private int CountPossibleSolutions(string guess, List<string> possibleGuesses, int bulls, int cows, Dictionary<string, int> countCache)
+        private string SelectNextGuess()
         {
-            string key = $"{guess}_{bulls}_{cows}";
+            Dictionary<string, int> guessCounts = new Dictionary<string, int>();
 
-            if (countCache.TryGetValue(key, out int count))
+            foreach (string guess in possibleGuesses)
             {
-                return count;
+                int count = CountPossibleSolutions(guess);
+                guessCounts[guess] = count;
             }
 
-            count = possibleGuesses.Count(g => CountBulls(guess, g) == bulls && CountCows(guess, g) == cows);
-            countCache[key] = count;
+            return guessCounts.OrderBy(x => x.Value).First().Key;
+        }
 
-            return count;
+        private int CountPossibleSolutions(string guess)
+        {
+            return possibleGuesses.Count(g =>
+                CountBulls(guess, g) == CountBulls(Guesses.Last(), g) &&
+                CountCows(guess, g) == CountCows(Guesses.Last(), g));
         }
 
         private int CountBulls(string guess, string secretNumber)
         {
-            if (string.IsNullOrEmpty(secretNumber))
-                return 0;
-
-            int count = 0;
-            for (int i = 0; i < guess.Length; i++)
-            {
-                if (guess[i] == secretNumber[i])
-                    count++;
-            }
-            return count;
+            return guess.Zip(secretNumber, (g, s) => g == s).Count(isMatch => isMatch);
         }
 
         private int CountCows(string guess, string secretNumber)
         {
-            if (string.IsNullOrEmpty(secretNumber))
-                return 0;
-
-            int count = 0;
-            foreach (char digit in guess)
-            {
-                if (secretNumber.Contains(digit))
-                    count++;
-            }
-            return count - CountBulls(guess, secretNumber);
+            return guess.Count(digit => secretNumber.Contains(digit)) - CountBulls(guess, secretNumber);
         }
     }
 }
