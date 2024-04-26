@@ -44,6 +44,7 @@ namespace AB_game
 
             this.groupValue = groupValue;
             GroupLabel.Text += " vs. Group " + groupValue;
+            TotalCountLabel.Text = "";
             timerPaused = false;
             elapsedSeconds = 0;
 
@@ -116,6 +117,7 @@ namespace AB_game
 
             if (isGameFinishedByHint)
             {
+                TotalCountLabel.Text = "";
                 AddGuessToDataGridView(currentGuess, hint);
                 numberOfGuesses++;
                 Win_Conditions(numberOfGuesses);
@@ -126,6 +128,7 @@ namespace AB_game
                 string nextGuess = result.Item1;
                 bool isGameFinished = result.Item2;
                 bool isError = result.Item3;
+                int remainingPossibleSolutions = result.Item4;
 
                 if (isError)
                 {
@@ -136,11 +139,13 @@ namespace AB_game
                 }
 
                 AddGuessToDataGridView(currentGuess, hint);
+                TotalCountLabel.Text = "Remaining Solutions: " + remainingPossibleSolutions;
 
                 if (isGameFinished)
                 {
                     PopulateGuessLabels(nextGuess);
                     AddGuessToDataGridView(nextGuess, hint);
+                    TotalCountLabel.Text = "";
                     numberOfGuesses += 2;
                     Win_Conditions(numberOfGuesses);
                 }
@@ -187,6 +192,7 @@ namespace AB_game
             ScoreTextBox.Visible = false;
             SubmitGameButton.Visible = false;
             SubmitGameButton.Text = "Submit Game";
+            TotalCountLabel.Text = "";
             submitGame = false;
             dataGridView1.Rows.Clear();
             codeBreakerGame = new CodeBreakerGame();

@@ -65,6 +65,7 @@
             winLabel = new Label();
             panel2 = new Panel();
             ScoreTextBox = new TextBox();
+            TotalCountLabel = new Label();
             SubmitGameButton = new Button();
             contextMenuStrip2 = new ContextMenuStrip(components);
             dataGridView1 = new DataGridView();
@@ -138,7 +139,7 @@
             newGameBtn.Font = new Font("Segoe UI", 24F);
             newGameBtn.ForeColor = Color.LightGray;
             newGameBtn.ImageAlign = ContentAlignment.TopCenter;
-            newGameBtn.Location = new Point(183, 553);
+            newGameBtn.Location = new Point(157, 566);
             newGameBtn.Name = "newGameBtn";
             newGameBtn.Size = new Size(204, 56);
             newGameBtn.TabIndex = 41;
@@ -152,7 +153,7 @@
             hintTextBox_1.BorderStyle = BorderStyle.FixedSingle;
             hintTextBox_1.Font = new Font("Segoe UI", 60F);
             hintTextBox_1.ForeColor = Color.White;
-            hintTextBox_1.Location = new Point(195, 166);
+            hintTextBox_1.Location = new Point(169, 179);
             hintTextBox_1.MaxLength = 1;
             hintTextBox_1.Name = "hintTextBox_1";
             hintTextBox_1.Size = new Size(81, 114);
@@ -167,7 +168,7 @@
             hintTextBox_2.BorderStyle = BorderStyle.FixedSingle;
             hintTextBox_2.Font = new Font("Segoe UI", 60F);
             hintTextBox_2.ForeColor = Color.White;
-            hintTextBox_2.Location = new Point(289, 166);
+            hintTextBox_2.Location = new Point(263, 179);
             hintTextBox_2.MaxLength = 1;
             hintTextBox_2.Name = "hintTextBox_2";
             hintTextBox_2.Size = new Size(81, 114);
@@ -183,7 +184,7 @@
             SubmitHintButton.Font = new Font("Segoe UI", 24F);
             SubmitHintButton.ForeColor = Color.LightGray;
             SubmitHintButton.ImageAlign = ContentAlignment.TopCenter;
-            SubmitHintButton.Location = new Point(195, 295);
+            SubmitHintButton.Location = new Point(169, 308);
             SubmitHintButton.Name = "SubmitHintButton";
             SubmitHintButton.Size = new Size(175, 56);
             SubmitHintButton.TabIndex = 29;
@@ -196,7 +197,7 @@
             // 
             label_hint.AutoSize = true;
             label_hint.Font = new Font("Segoe UI", 26F);
-            label_hint.Location = new Point(195, 116);
+            label_hint.Location = new Point(169, 129);
             label_hint.Name = "label_hint";
             label_hint.Size = new Size(175, 47);
             label_hint.TabIndex = 33;
@@ -206,7 +207,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 26F);
-            label2.Location = new Point(185, 358);
+            label2.Location = new Point(159, 371);
             label2.Name = "label2";
             label2.Size = new Size(191, 47);
             label2.TabIndex = 36;
@@ -217,7 +218,7 @@
             GuessLabel_1.AutoSize = true;
             GuessLabel_1.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_1.Font = new Font("Segoe UI", 60F);
-            GuessLabel_1.Location = new Point(103, 414);
+            GuessLabel_1.Location = new Point(77, 427);
             GuessLabel_1.Name = "GuessLabel_1";
             GuessLabel_1.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_1.Size = new Size(87, 122);
@@ -230,7 +231,7 @@
             GuessLabel_2.AutoSize = true;
             GuessLabel_2.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_2.Font = new Font("Segoe UI", 60F);
-            GuessLabel_2.Location = new Point(196, 414);
+            GuessLabel_2.Location = new Point(170, 427);
             GuessLabel_2.Name = "GuessLabel_2";
             GuessLabel_2.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_2.Size = new Size(87, 122);
@@ -243,7 +244,7 @@
             GuessLabel_3.AutoSize = true;
             GuessLabel_3.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_3.Font = new Font("Segoe UI", 60F);
-            GuessLabel_3.Location = new Point(289, 414);
+            GuessLabel_3.Location = new Point(263, 427);
             GuessLabel_3.Name = "GuessLabel_3";
             GuessLabel_3.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_3.Size = new Size(87, 122);
@@ -256,7 +257,7 @@
             GuessLabel_4.AutoSize = true;
             GuessLabel_4.BorderStyle = BorderStyle.FixedSingle;
             GuessLabel_4.Font = new Font("Segoe UI", 60F);
-            GuessLabel_4.Location = new Point(382, 414);
+            GuessLabel_4.Location = new Point(356, 427);
             GuessLabel_4.Name = "GuessLabel_4";
             GuessLabel_4.Padding = new Padding(8, 0, 0, 14);
             GuessLabel_4.Size = new Size(87, 122);
@@ -413,7 +414,6 @@
             // 
             winLabel.AutoSize = true;
             winLabel.BorderStyle = BorderStyle.FixedSingle;
-            winLabel.Dock = DockStyle.Left;
             winLabel.Font = new Font("Segoe UI", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             winLabel.Location = new Point(0, 0);
             winLabel.Name = "winLabel";
@@ -427,7 +427,7 @@
             // 
             panel2.Controls.Add(ScoreTextBox);
             panel2.Controls.Add(winLabel);
-            panel2.Location = new Point(538, 626);
+            panel2.Location = new Point(580, 626);
             panel2.Name = "panel2";
             panel2.Size = new Size(232, 60);
             panel2.TabIndex = 42;
@@ -438,7 +438,7 @@
             ScoreTextBox.BorderStyle = BorderStyle.FixedSingle;
             ScoreTextBox.Font = new Font("Segoe UI", 29.5F);
             ScoreTextBox.ForeColor = Color.White;
-            ScoreTextBox.Location = new Point(111, 0);
+            ScoreTextBox.Location = new Point(122, 0);
             ScoreTextBox.MaxLength = 3;
             ScoreTextBox.Name = "ScoreTextBox";
             ScoreTextBox.Size = new Size(65, 60);
@@ -446,6 +446,17 @@
             ScoreTextBox.TextAlign = HorizontalAlignment.Center;
             ScoreTextBox.Visible = false;
             ScoreTextBox.TextChanged += ScoreTextBox_TextChanged;
+            // 
+            // TotalCountLabel
+            // 
+            TotalCountLabel.AutoSize = true;
+            TotalCountLabel.Font = new Font("Segoe UI", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TotalCountLabel.Location = new Point(583, 626);
+            TotalCountLabel.Name = "TotalCountLabel";
+            TotalCountLabel.Padding = new Padding(0, 5, 0, 6);
+            TotalCountLabel.Size = new Size(302, 58);
+            TotalCountLabel.TabIndex = 46;
+            TotalCountLabel.Text = "Possible Solution: ";
             // 
             // SubmitGameButton
             // 
@@ -514,7 +525,7 @@
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             dataGridView1.RowTemplate.Height = 45;
             dataGridView1.ScrollBars = ScrollBars.Vertical;
-            dataGridView1.Size = new Size(495, 480);
+            dataGridView1.Size = new Size(495, 491);
             dataGridView1.TabIndex = 44;
             // 
             // GuessNumber
@@ -553,6 +564,7 @@
             BackColor = Color.FromArgb(46, 51, 73);
             ClientSize = new Size(1100, 700);
             ContextMenuStrip = contextMenuStrip1;
+            Controls.Add(TotalCountLabel);
             Controls.Add(dataGridView1);
             Controls.Add(SubmitGameButton);
             Controls.Add(panel2);
@@ -630,5 +642,6 @@
         private DataGridViewTextBoxColumn GuessNumber;
         private DataGridViewTextBoxColumn Guess;
         private DataGridViewTextBoxColumn Hint;
+        private Label TotalCountLabel;
     }
 }
