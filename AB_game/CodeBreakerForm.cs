@@ -125,6 +125,15 @@ namespace AB_game
                 var result = await Task.Run(() => codeBreakerGame.MakeGuess(bulls, cows));
                 string nextGuess = result.Item1;
                 bool isGameFinished = result.Item2;
+                bool isError = result.Item3;
+
+                if (isError)
+                {
+                    hintTextBox_1.Clear();
+                    hintTextBox_2.Clear();
+                    hintTextBox_1.Focus();
+                    return;
+                }
 
                 AddGuessToDataGridView(currentGuess, hint);
 

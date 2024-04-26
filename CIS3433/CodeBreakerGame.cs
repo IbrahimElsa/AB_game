@@ -54,22 +54,37 @@ namespace CIS3433
             return initialGuess;
         }
 
-        public (string finalGuess, bool isGameFinished) MakeGuess(int bulls, int cows)
+        public (string finalGuess, bool isGameFinished, bool isError) MakeGuess(int bulls, int cows)
         {
+            string lastGuess = Guesses.Last();
+            if (bulls < 0 || bulls > 4 || cows < 0 || cows > 4 || bulls + cows > 4 ||
+                (bulls == 3 && cows == 1) || (bulls == 4 && cows > 0))
+            {
+                return (string.Empty, false, true);
+            }
+
             RemoveInvalidGuesses(bulls, cows);
             if (bulls == 4)
             {
-                return (Guesses.Last(), true);
+                return (lastGuess, true, false);
             }
             if (possibleGuesses.Count == 1)
             {
                 string finalGuess = possibleGuesses[0];
                 Guesses.Add(finalGuess);
-                return (finalGuess, true);
+                return (finalGuess, true, false);
             }
-            string nextGuess = SelectNextGuess();
-            Guesses.Add(nextGuess);
-            return (nextGuess, false);
+
+            try
+            {
+                string nextGuess = SelectNextGuess();
+                Guesses.Add(nextGuess);
+                return (nextGuess, false, false);
+            }
+            catch (InvalidOperationException)
+            {
+                return (string.Empty, false, true);
+            }
         }
 
         private void RemoveInvalidGuesses(int bulls, int cows)
