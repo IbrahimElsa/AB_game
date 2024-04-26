@@ -175,6 +175,7 @@ namespace AB_game
 
 
 
+
         private void newGameBtn_Click(object sender, EventArgs e)
         {
             hintTextBox_1.Text = "";
