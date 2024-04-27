@@ -427,7 +427,7 @@
             // 
             panel2.Controls.Add(ScoreTextBox);
             panel2.Controls.Add(winLabel);
-            panel2.Location = new Point(580, 626);
+            panel2.Location = new Point(555, 626);
             panel2.Name = "panel2";
             panel2.Size = new Size(232, 60);
             panel2.TabIndex = 42;
@@ -441,7 +441,7 @@
             ScoreTextBox.Location = new Point(122, 0);
             ScoreTextBox.MaxLength = 3;
             ScoreTextBox.Name = "ScoreTextBox";
-            ScoreTextBox.Size = new Size(65, 60);
+            ScoreTextBox.Size = new Size(90, 60);
             ScoreTextBox.TabIndex = 45;
             ScoreTextBox.TextAlign = HorizontalAlignment.Center;
             ScoreTextBox.Visible = false;
@@ -451,7 +451,7 @@
             // 
             TotalCountLabel.AutoSize = true;
             TotalCountLabel.Font = new Font("Segoe UI", 26.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            TotalCountLabel.Location = new Point(583, 626);
+            TotalCountLabel.Location = new Point(610, 626);
             TotalCountLabel.Name = "TotalCountLabel";
             TotalCountLabel.Padding = new Padding(0, 5, 0, 6);
             TotalCountLabel.Size = new Size(302, 58);

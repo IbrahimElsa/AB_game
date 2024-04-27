@@ -94,10 +94,9 @@
             RevealButton.ForeColor = Color.LightGray;
             RevealButton.Location = new Point(82, 570);
             RevealButton.Name = "RevealButton";
-            RevealButton.Size = new Size(167, 40);
+            RevealButton.Size = new Size(167, 50);
             RevealButton.TabIndex = 23;
             RevealButton.Text = "Reveal Secret";
-            RevealButton.TextAlign = ContentAlignment.TopCenter;
             RevealButton.UseVisualStyleBackColor = true;
             RevealButton.Click += RevealButton_Click;
             // 
@@ -471,10 +470,9 @@
             NewGameButton.ForeColor = Color.LightGray;
             NewGameButton.Location = new Point(287, 570);
             NewGameButton.Name = "NewGameButton";
-            NewGameButton.Size = new Size(166, 40);
+            NewGameButton.Size = new Size(166, 50);
             NewGameButton.TabIndex = 27;
             NewGameButton.Text = "New Game";
-            NewGameButton.TextAlign = ContentAlignment.TopCenter;
             NewGameButton.UseVisualStyleBackColor = true;
             NewGameButton.Click += NewGameButton_Click;
             // 
@@ -598,10 +596,10 @@
             ScoreTextBox.BorderStyle = BorderStyle.FixedSingle;
             ScoreTextBox.Font = new Font("Segoe UI", 29.5F);
             ScoreTextBox.ForeColor = Color.White;
-            ScoreTextBox.Location = new Point(111, 0);
+            ScoreTextBox.Location = new Point(122, 0);
             ScoreTextBox.MaxLength = 3;
             ScoreTextBox.Name = "ScoreTextBox";
-            ScoreTextBox.Size = new Size(65, 60);
+            ScoreTextBox.Size = new Size(90, 60);
             ScoreTextBox.TabIndex = 46;
             ScoreTextBox.TextAlign = HorizontalAlignment.Center;
             ScoreTextBox.Visible = false;

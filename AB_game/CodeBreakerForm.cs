@@ -143,6 +143,7 @@ namespace AB_game
 
                 if (isGameFinished)
                 {
+                    hint = "4A0B";
                     PopulateGuessLabels(nextGuess);
                     AddGuessToDataGridView(nextGuess, hint);
                     TotalCountLabel.Text = "";

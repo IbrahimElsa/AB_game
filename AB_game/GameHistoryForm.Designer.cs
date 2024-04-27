@@ -78,12 +78,12 @@
             GroupLabel.FlatStyle = FlatStyle.Flat;
             GroupLabel.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             GroupLabel.ForeColor = Color.White;
-            GroupLabel.Location = new Point(451, 0);
+            GroupLabel.Location = new Point(343, 0);
             GroupLabel.Name = "GroupLabel";
             GroupLabel.Padding = new Padding(0, 10, 10, 0);
-            GroupLabel.Size = new Size(89, 31);
+            GroupLabel.Size = new Size(197, 31);
             GroupLabel.TabIndex = 5;
-            GroupLabel.Text = "Group 11";
+            GroupLabel.Text = "Group 11 Game History";
             GroupLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ExitButton
