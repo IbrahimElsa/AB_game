@@ -36,11 +36,11 @@
             GroupLabel = new Label();
             ExitButton = new Button();
             menuStrip1 = new MenuStrip();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            exitToolStripMenuItem1 = new ToolStripMenuItem();
             menuToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
             label1 = new Label();
-            contextMenuStrip1 = new ContextMenuStrip(components);
-            exitToolStripMenuItem1 = new ToolStripMenuItem();
             dataGridView1 = new DataGridView();
             ExitPanel.SuspendLayout();
             NamePanel.SuspendLayout();
@@ -105,6 +105,7 @@
             // menuStrip1
             // 
             menuStrip1.AutoSize = false;
+            menuStrip1.ContextMenuStrip = contextMenuStrip1;
             menuStrip1.Dock = DockStyle.None;
             menuStrip1.GripMargin = new Padding(5);
             menuStrip1.ImageScalingSize = new Size(24, 24);
@@ -117,6 +118,20 @@
             menuStrip1.Size = new Size(172, 42);
             menuStrip1.TabIndex = 31;
             menuStrip1.Text = "menuStrip1";
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.ImageScalingSize = new Size(24, 24);
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { exitToolStripMenuItem1 });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(94, 26);
+            // 
+            // exitToolStripMenuItem1
+            // 
+            exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            exitToolStripMenuItem1.Size = new Size(93, 22);
+            exitToolStripMenuItem1.Text = "Exit";
+            exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
             // 
             // menuToolStripMenuItem
             // 
@@ -142,20 +157,6 @@
             label1.Size = new Size(335, 68);
             label1.TabIndex = 1;
             label1.Text = "Game History";
-            // 
-            // contextMenuStrip1
-            // 
-            contextMenuStrip1.ImageScalingSize = new Size(24, 24);
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { exitToolStripMenuItem1 });
-            contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(94, 26);
-            // 
-            // exitToolStripMenuItem1
-            // 
-            exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            exitToolStripMenuItem1.Size = new Size(93, 22);
-            exitToolStripMenuItem1.Text = "Exit";
-            exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
             // 
             // dataGridView1
             // 
