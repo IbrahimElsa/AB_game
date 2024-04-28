@@ -89,7 +89,7 @@ namespace AB_game
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0) // Ensure that the header row isn't triggering this
+            if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
                 var labelData = new Dictionary<string, string>
@@ -100,35 +100,14 @@ namespace AB_game
                     { "Time", row.Cells["Time"].Value?.ToString() ?? string.Empty },
                     { "TotalSeconds", row.Cells["TotalSeconds"].Value?.ToString() ?? string.Empty },
                     { "SecretNumber", row.Cells["SecretNumber"].Value?.ToString() ?? string.Empty },
-                    { "GameScore", row.Cells["GameScore"].Value?.ToString() ?? string.Empty }
+                    { "GameScore", row.Cells["GameScore"].Value?.ToString() ?? string.Empty },
+                    { "GuessDetails", row.Cells["GuessDetails"].Value?.ToString() ?? string.Empty }
                 };
 
-                string guessDetails = FormatGuessDetails(row);
-
-                GameResult gameResultForm = new GameResult(labelData, guessDetails);
+                GameResult gameResultForm = new GameResult(labelData);
                 gameResultForm.Show();
             }
         }
-
-        private string FormatGuessDetails(DataGridViewRow row)
-        {
-            // Example: Guess 1: ABCD (hint1), Guess 2: EFGH (hint2), ...
-            // Implement this based on your actual data and format requirements
-            StringBuilder details = new StringBuilder();
-            // Assuming each guess is in a separate cell and hints in the adjacent cells.
-            for (int i = 0; i < row.Cells.Count; i += 2) // Adjust loop step depending on your data structure
-            {
-                details.AppendFormat("Guess {0}: {1} ({2}), ", i / 2 + 1, row.Cells[i].Value, row.Cells[i].Value);
-            }
-            return details.ToString().TrimEnd(',', ' ');
-        }
-
-
-
-
-
-
-
 
         // UI Logic
         public class CustomMenuRenderer : ToolStripProfessionalRenderer

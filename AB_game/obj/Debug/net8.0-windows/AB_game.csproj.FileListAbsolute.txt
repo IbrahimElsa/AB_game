@@ -208,3 +208,4 @@ C:\Users\Brad\Desktop\AB_game\AB_game\obj\Debug\net8.0-windows\AB_game.pdb
 C:\Users\Brad\Desktop\AB_game\AB_game\obj\Debug\net8.0-windows\AB_game.genruntimeconfig.cache
 C:\Users\Brad\Desktop\AB_game\AB_game\obj\Debug\net8.0-windows\ref\AB_game.dll
 D:\School\ABGame\AB_game\AB_game\obj\Debug\net8.0-windows\AB_game.GameResult.resources
+C:\Users\Brad\Desktop\AB_game\AB_game\obj\Debug\net8.0-windows\AB_game.GameResult.resources

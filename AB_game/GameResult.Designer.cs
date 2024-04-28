@@ -33,13 +33,14 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             ExitPanel = new Panel();
+            NamePanel = new Panel();
+            GroupLabel = new Label();
             ExitButton = new Button();
-            menuStrip2 = new MenuStrip();
+            menuStrip1 = new MenuStrip();
             toolStripMenuItem1 = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
             contextMenuStrip1 = new ContextMenuStrip(components);
             exitToolStripMenuItem1 = new ToolStripMenuItem();
-            GroupName = new Label();
             GameMode = new Label();
             Date = new Label();
             Time = new Label();
@@ -47,12 +48,14 @@
             SecretNumber = new Label();
             GameScore = new Label();
             label1 = new Label();
+            GroupName = new Label();
             dataGridView1 = new DataGridView();
             GuessNumber = new DataGridViewTextBoxColumn();
             Guess = new DataGridViewTextBoxColumn();
             Hint = new DataGridViewTextBoxColumn();
             ExitPanel.SuspendLayout();
-            menuStrip2.SuspendLayout();
+            NamePanel.SuspendLayout();
+            menuStrip1.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -60,12 +63,36 @@
             // ExitPanel
             // 
             ExitPanel.BackColor = Color.FromArgb(36, 42, 59);
+            ExitPanel.Controls.Add(NamePanel);
             ExitPanel.Controls.Add(ExitButton);
-            ExitPanel.Controls.Add(menuStrip2);
+            ExitPanel.Controls.Add(menuStrip1);
             ExitPanel.Location = new Point(0, 0);
             ExitPanel.Name = "ExitPanel";
             ExitPanel.Size = new Size(1100, 40);
             ExitPanel.TabIndex = 0;
+            // 
+            // NamePanel
+            // 
+            NamePanel.Controls.Add(GroupLabel);
+            NamePanel.Dock = DockStyle.Right;
+            NamePanel.Location = new Point(510, 0);
+            NamePanel.Name = "NamePanel";
+            NamePanel.Size = new Size(540, 40);
+            NamePanel.TabIndex = 33;
+            // 
+            // GroupLabel
+            // 
+            GroupLabel.AutoSize = true;
+            GroupLabel.Dock = DockStyle.Right;
+            GroupLabel.FlatStyle = FlatStyle.Flat;
+            GroupLabel.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            GroupLabel.ForeColor = Color.White;
+            GroupLabel.Location = new Point(530, 0);
+            GroupLabel.Name = "GroupLabel";
+            GroupLabel.Padding = new Padding(0, 10, 10, 0);
+            GroupLabel.Size = new Size(10, 31);
+            GroupLabel.TabIndex = 5;
+            GroupLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ExitButton
             // 
@@ -83,21 +110,21 @@
             ExitButton.UseVisualStyleBackColor = true;
             ExitButton.Click += ExitButton_Click;
             // 
-            // menuStrip2
+            // menuStrip1
             // 
-            menuStrip2.AutoSize = false;
-            menuStrip2.Dock = DockStyle.None;
-            menuStrip2.GripMargin = new Padding(5);
-            menuStrip2.ImageScalingSize = new Size(24, 24);
-            menuStrip2.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1 });
-            menuStrip2.Location = new Point(0, 0);
-            menuStrip2.Margin = new Padding(9);
-            menuStrip2.Name = "menuStrip2";
-            menuStrip2.Padding = new Padding(0);
-            menuStrip2.RenderMode = ToolStripRenderMode.System;
-            menuStrip2.Size = new Size(172, 42);
-            menuStrip2.TabIndex = 32;
-            menuStrip2.Text = "menuStrip2";
+            menuStrip1.AutoSize = false;
+            menuStrip1.Dock = DockStyle.None;
+            menuStrip1.GripMargin = new Padding(5);
+            menuStrip1.ImageScalingSize = new Size(24, 24);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1 });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Margin = new Padding(9);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Padding = new Padding(0);
+            menuStrip1.RenderMode = ToolStripRenderMode.System;
+            menuStrip1.Size = new Size(172, 42);
+            menuStrip1.TabIndex = 32;
+            menuStrip1.Text = "menuStrip2";
             // 
             // toolStripMenuItem1
             // 
@@ -126,23 +153,12 @@
             exitToolStripMenuItem1.Text = "Exit";
             exitToolStripMenuItem1.Click += exitToolStripMenuItem1_Click;
             // 
-            // GroupName
-            // 
-            GroupName.AutoSize = true;
-            GroupName.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            GroupName.ForeColor = Color.White;
-            GroupName.Location = new Point(72, 153);
-            GroupName.Name = "GroupName";
-            GroupName.Size = new Size(210, 40);
-            GroupName.TabIndex = 1;
-            GroupName.Text = "Group Name: ";
-            // 
             // GameMode
             // 
             GameMode.AutoSize = true;
             GameMode.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             GameMode.ForeColor = Color.White;
-            GameMode.Location = new Point(72, 211);
+            GameMode.Location = new Point(48, 235);
             GameMode.Name = "GameMode";
             GameMode.Size = new Size(201, 40);
             GameMode.TabIndex = 2;
@@ -153,7 +169,7 @@
             Date.AutoSize = true;
             Date.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Date.ForeColor = Color.White;
-            Date.Location = new Point(72, 266);
+            Date.Location = new Point(48, 290);
             Date.Name = "Date";
             Date.Size = new Size(97, 40);
             Date.TabIndex = 3;
@@ -164,7 +180,7 @@
             Time.AutoSize = true;
             Time.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Time.ForeColor = Color.White;
-            Time.Location = new Point(72, 328);
+            Time.Location = new Point(48, 352);
             Time.Name = "Time";
             Time.Size = new Size(101, 40);
             Time.TabIndex = 4;
@@ -175,7 +191,7 @@
             TotalSeconds.AutoSize = true;
             TotalSeconds.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             TotalSeconds.ForeColor = Color.White;
-            TotalSeconds.Location = new Point(72, 392);
+            TotalSeconds.Location = new Point(48, 416);
             TotalSeconds.Name = "TotalSeconds";
             TotalSeconds.Size = new Size(221, 40);
             TotalSeconds.TabIndex = 6;
@@ -186,7 +202,7 @@
             SecretNumber.AutoSize = true;
             SecretNumber.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             SecretNumber.ForeColor = Color.White;
-            SecretNumber.Location = new Point(72, 451);
+            SecretNumber.Location = new Point(48, 475);
             SecretNumber.Name = "SecretNumber";
             SecretNumber.Size = new Size(241, 40);
             SecretNumber.TabIndex = 7;
@@ -197,7 +213,7 @@
             GameScore.AutoSize = true;
             GameScore.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             GameScore.ForeColor = Color.White;
-            GameScore.Location = new Point(72, 514);
+            GameScore.Location = new Point(48, 538);
             GameScore.Name = "GameScore";
             GameScore.Size = new Size(197, 40);
             GameScore.TabIndex = 8;
@@ -214,14 +230,27 @@
             label1.TabIndex = 10;
             label1.Text = "Game Result";
             // 
+            // GroupName
+            // 
+            GroupName.AutoSize = true;
+            GroupName.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            GroupName.ForeColor = Color.White;
+            GroupName.Location = new Point(48, 177);
+            GroupName.Name = "GroupName";
+            GroupName.Size = new Size(210, 40);
+            GroupName.TabIndex = 1;
+            GroupName.Text = "Group Name: ";
+            // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridView1.BackgroundColor = Color.FromArgb(46, 51, 73);
             dataGridView1.BorderStyle = BorderStyle.None;
-            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(46, 51, 73);
@@ -243,7 +272,7 @@
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.FromArgb(64, 70, 86);
-            dataGridView1.Location = new Point(549, 153);
+            dataGridView1.Location = new Point(510, 153);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RightToLeft = RightToLeft.No;
@@ -260,8 +289,8 @@
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             dataGridView1.RowTemplate.Height = 45;
             dataGridView1.ScrollBars = ScrollBars.Vertical;
-            dataGridView1.Size = new Size(495, 491);
-            dataGridView1.TabIndex = 45;
+            dataGridView1.Size = new Size(501, 480);
+            dataGridView1.TabIndex = 24;
             // 
             // GuessNumber
             // 
@@ -315,8 +344,10 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "GameResult";
             ExitPanel.ResumeLayout(false);
-            menuStrip2.ResumeLayout(false);
-            menuStrip2.PerformLayout();
+            NamePanel.ResumeLayout(false);
+            NamePanel.PerformLayout();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
@@ -326,13 +357,12 @@
         #endregion
 
         private Panel ExitPanel;
-        private MenuStrip menuStrip2;
+        private MenuStrip menuStrip1;
         private ToolStripMenuItem toolStripMenuItem1;
         private ToolStripMenuItem exitToolStripMenuItem;
         private Button ExitButton;
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem exitToolStripMenuItem1;
-        private Label GroupName;
         private Label GameMode;
         private Label Date;
         private Label Time;
@@ -340,6 +370,9 @@
         private Label SecretNumber;
         private Label GameScore;
         private Label label1;
+        private Panel NamePanel;
+        private Label GroupLabel;
+        private Label GroupName;
         private DataGridView dataGridView1;
         private DataGridViewTextBoxColumn GuessNumber;
         private DataGridViewTextBoxColumn Guess;
