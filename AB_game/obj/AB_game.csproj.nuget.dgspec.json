@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Brad\\Desktop\\AB_game\\AB_game\\AB_game.csproj": {}
+    "D:\\School\\ABGame\\AB_game\\AB_game\\AB_game.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Brad\\Desktop\\AB_game\\AB_game\\AB_game.csproj": {
+    "D:\\School\\ABGame\\AB_game\\AB_game\\AB_game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Brad\\Desktop\\AB_game\\AB_game\\AB_game.csproj",
+        "projectUniqueName": "D:\\School\\ABGame\\AB_game\\AB_game\\AB_game.csproj",
         "projectName": "AB_game",
-        "projectPath": "C:\\Users\\Brad\\Desktop\\AB_game\\AB_game\\AB_game.csproj",
-        "packagesPath": "C:\\Users\\Brad\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Brad\\Desktop\\AB_game\\AB_game\\obj\\",
+        "projectPath": "D:\\School\\ABGame\\AB_game\\AB_game\\AB_game.csproj",
+        "packagesPath": "C:\\Users\\Ibrahim\\.nuget\\packages\\",
+        "outputPath": "D:\\School\\ABGame\\AB_game\\AB_game\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Brad\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Ibrahim\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows",
             "projectReferences": {
-              "C:\\Users\\Brad\\Desktop\\AB_game\\CIS3433\\CIS3433.csproj": {
-                "projectPath": "C:\\Users\\Brad\\Desktop\\AB_game\\CIS3433\\CIS3433.csproj"
+              "D:\\School\\ABGame\\AB_game\\CIS3433\\CIS3433.csproj": {
+                "projectPath": "D:\\School\\ABGame\\AB_game\\CIS3433\\CIS3433.csproj"
               }
             }
           }
@@ -38,6 +38,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -68,21 +73,21 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Brad\\Desktop\\AB_game\\CIS3433\\CIS3433.csproj": {
+    "D:\\School\\ABGame\\AB_game\\CIS3433\\CIS3433.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Brad\\Desktop\\AB_game\\CIS3433\\CIS3433.csproj",
+        "projectUniqueName": "D:\\School\\ABGame\\AB_game\\CIS3433\\CIS3433.csproj",
         "projectName": "CIS3433",
-        "projectPath": "C:\\Users\\Brad\\Desktop\\AB_game\\CIS3433\\CIS3433.csproj",
-        "packagesPath": "C:\\Users\\Brad\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Brad\\Desktop\\AB_game\\CIS3433\\obj\\",
+        "projectPath": "D:\\School\\ABGame\\AB_game\\CIS3433\\CIS3433.csproj",
+        "packagesPath": "C:\\Users\\Ibrahim\\.nuget\\packages\\",
+        "outputPath": "D:\\School\\ABGame\\AB_game\\CIS3433\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Brad\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Ibrahim\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -102,6 +107,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -132,7 +142,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
